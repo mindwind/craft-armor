@@ -1,0 +1,11 @@
+
+.project
+.classpath
+*.prefs
+*.class
+*.backup
+*.versionsBackup
+*/checkout
+*/target
+*/bin
+target/*
