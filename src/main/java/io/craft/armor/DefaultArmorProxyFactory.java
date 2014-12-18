@@ -1,16 +1,13 @@
 package io.craft.armor;
 
-import java.lang.reflect.Proxy;
-
 import io.craft.armor.spi.ArmorProxyFactory;
 
-import org.springframework.stereotype.Component;
+import java.lang.reflect.Proxy;
 
 /**
  * @author mindwind
  * @version 1.0, Dec 18, 2014
  */
-@Component("craft.armor.proxy.factory")
 public class DefaultArmorProxyFactory implements ArmorProxyFactory {
 
 	@Override
