@@ -8,7 +8,7 @@ import java.lang.reflect.Proxy;
  * @author mindwind
  * @version 1.0, Dec 18, 2014
  */
-public class DefaultArmorProxyFactory implements ArmorProxyFactory {
+public class JdkArmorProxyFactory implements ArmorProxyFactory {
 
 	@Override
 	public Object getProxy(Object bean, Class<?>[] interfaces) {
