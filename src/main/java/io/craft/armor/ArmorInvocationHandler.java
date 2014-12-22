@@ -30,7 +30,7 @@ public class ArmorInvocationHandler implements InvocationHandler {
 			return rawInvoke(method, args);
 		}
 		
-		// Armor method swich is off
+		// Armor method switch is off
 		if (!armorService.isOn(delegate.getClass(), method.getName(), method.getParameterTypes())) {  
 			return rawInvoke(method, args);
 		}
