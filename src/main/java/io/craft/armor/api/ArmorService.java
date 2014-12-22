@@ -1,5 +1,8 @@
 package io.craft.armor.api;
 
+import io.craft.armor.spi.ArmorFilter;
+import io.craft.armor.spi.ArmorFilterChain;
+
 /**
  * Provide armor internal monitor and management API.
  * 
@@ -55,5 +58,35 @@ public interface ArmorService {
 	 */
 	void off(Class<?> clazz, String method, Class<?>[] parameterTypes);
 	
+	/**
+	 * Tell the specified type filter is on or not.
+	 * 
+	 * @param filterType The filter class
+	 * @return true when this type filter is on.
+	 */
+	boolean isOn(Class<? extends ArmorFilter> filterType);
 	
+	/**
+	 * Turn on the specified type filter.
+	 * 
+	 * @param filterType The filter class to turn on.
+	 */
+	void on(Class<? extends ArmorFilter> filterType);
+	
+	/**
+	 * Turn off the specified type filter.
+	 * 
+	 * @param filterType The filter class to turn off.
+	 */
+	void off(Class<? extends ArmorFilter> filterType);
+	
+	/**
+	 * Set armor method filter chain.
+	 * 
+	 * @param clazz          armed service class object.
+	 * @param method         armed service method name.
+	 * @param parameterTypes armed service method parameter types.
+	 * @param filterChain    filter chain of the armed service method.
+	 */
+	void set(Class<?> clazz, String method, Class<?>[] parameterTypes, ArmorFilterChain filterChain);
 }

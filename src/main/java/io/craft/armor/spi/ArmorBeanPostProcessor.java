@@ -1,7 +1,7 @@
-package io.craft.armor;
+package io.craft.armor.spi;
 
+import io.craft.armor.DefaultArmorProxyFactory;
 import io.craft.armor.api.Armor;
-import io.craft.armor.spi.ArmorProxyFactory;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.Ordered;
-import org.springframework.stereotype.Component;
 
 /**
  * A spring factory hook to armed spring-based service.
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Component;
  * @author warden
  * @version 1.0, Dec 17, 2014
  */
-@Component("craft.armor.bean.post.processor")
 public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 
 	
