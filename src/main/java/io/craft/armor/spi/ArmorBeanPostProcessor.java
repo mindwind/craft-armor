@@ -1,6 +1,6 @@
 package io.craft.armor.spi;
 
-import io.craft.armor.DefaultArmorProxyFactory;
+import io.craft.armor.JdkArmorProxyFactory;
 import io.craft.armor.api.Armor;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +31,7 @@ public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 	
 	
 	public ArmorBeanPostProcessor() {
-		proxyFactory = new DefaultArmorProxyFactory();
+		proxyFactory = new JdkArmorProxyFactory();
 		init();
 	}
 	
