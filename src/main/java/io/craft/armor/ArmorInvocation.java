@@ -1,4 +1,4 @@
-package io.craft.armor.spi;
+package io.craft.armor;
 
 import java.io.Serializable;
 

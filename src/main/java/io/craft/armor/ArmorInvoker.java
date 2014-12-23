@@ -1,4 +1,4 @@
-package io.craft.armor.spi;
+package io.craft.armor;
 
 /**
  * Armor invoker, launch the armor context invocation.

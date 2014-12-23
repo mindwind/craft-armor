@@ -1,6 +1,5 @@
 package io.craft.armor;
 
-import io.craft.armor.spi.ArmorInvocation;
 import lombok.Getter;
 import lombok.Setter;
 

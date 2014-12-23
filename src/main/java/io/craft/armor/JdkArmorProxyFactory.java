@@ -1,6 +1,5 @@
 package io.craft.armor;
 
-import io.craft.armor.spi.ArmorInvoker;
 import io.craft.armor.spi.ArmorProxyFactory;
 
 import java.lang.reflect.Proxy;
@@ -16,6 +15,11 @@ public class JdkArmorProxyFactory implements ArmorProxyFactory {
 	
 	
 	@Getter @Setter private ArmorInvoker invoker;
+	
+	
+	public JdkArmorProxyFactory(ArmorInvoker invoker) {
+		this.invoker = invoker;
+	}
 	
 
 	@Override
