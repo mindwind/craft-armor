@@ -1,5 +1,6 @@
 package io.craft.armor.spi;
 
+import io.craft.armor.DefaultArmorInvoker;
 import io.craft.armor.JdkArmorProxyFactory;
 import io.craft.armor.api.Armor;
 import lombok.Getter;
@@ -24,6 +25,9 @@ public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 
 	
 	private static final Logger LOG = LoggerFactory.getLogger(ArmorBeanPostProcessor.class);
+	
+	
+	@Getter @Setter private ArmorInvoker      invoker     ;
 	@Getter @Setter private ArmorProxyFactory proxyFactory;
 	
 	
@@ -31,7 +35,9 @@ public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 	
 	
 	public ArmorBeanPostProcessor() {
+		invoker      = new DefaultArmorInvoker();
 		proxyFactory = new JdkArmorProxyFactory();
+		proxyFactory.setInvoker(invoker);
 		init();
 	}
 	
