@@ -29,45 +29,10 @@ public class JdkArmorInvocationHandler implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		DefaultArmorInvocation invo = new DefaultArmorInvocation();
 		invo.setDelegateObject(delegate);
-		invo.setMethodName(method.getName());
+		invo.setMethod(method);
 		invo.setParameterTypes(method.getParameterTypes());
 		invo.setParameters(args);
 		return invoker.invoke(invo);
 	}
-	
-	
-//	private Object       delegate    ;
-//	private ArmorService armorService;
-//	
-//	
-//	public JdkArmorInvocationHandler(Object delegate) {
-//		 this.delegate = delegate;
-//	}
-//
-//	
-//	@Override
-//	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-//		// Armor master switch is off
-//		if (!armorService.isOn()) { 
-//			return rawInvoke(method, args);
-//		}
-//		
-//		// Armor method switch is off
-//		if (!armorService.isOn(delegate.getClass(), method.getName(), method.getParameterTypes())) {  
-//			return rawInvoke(method, args);
-//		}
-//		
-//		
-//		// Armor context invoke
-//		return armorInvoke(method, args);
-//	}
-//	
-//	private Object rawInvoke(Method method, Object[] args) throws Throwable {
-//		return method.invoke(delegate, args);
-//	}
-//	
-//	private Object armorInvoke(Method method, Object[] args) throws Throwable {
-//		return null; // TODO
-//	}
 
 }

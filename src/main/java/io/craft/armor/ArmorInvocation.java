@@ -1,6 +1,7 @@
 package io.craft.armor;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 
 /**
  * Represents armor context invocation object.
@@ -16,9 +17,9 @@ public interface ArmorInvocation extends Serializable {
 	Object getDelegateObject();
 	
 	/**
-	 * @return method name
+	 * @return method
 	 */
-	String getMethodName();
+	Method getMethod();
 	
 	/**
 	 * @return method parameter types.

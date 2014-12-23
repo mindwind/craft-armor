@@ -1,5 +1,7 @@
 package io.craft.armor;
 
+import java.lang.reflect.Method;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +16,7 @@ public class DefaultArmorInvocation implements ArmorInvocation {
 	
 	
 	@Getter @Setter private Object     delegateObject;
-	@Getter @Setter private String     methodName    ;
+	@Getter @Setter private Method     method        ;
 	@Getter @Setter private Class<?>[] parameterTypes;
 	@Getter @Setter private Object[]   parameters    ;
 	
