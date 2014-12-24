@@ -49,23 +49,31 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 	}
 	
 	
-	private Object armorInvoke(final ArmorInvocation invocation) throws Throwable {
+	private Object armorInvoke(ArmorInvocation invocation) throws Throwable {
 		boolean inContext = context.isInContext();
-		final ArmorFilterChain filterChain = context.getFilterChain(invocation);
+		ArmorFilterChain filterChain = context.getFilterChain(invocation);
 		if (inContext) {
-			return filterChain.doFilter(invocation);
+			return armorCurrentContextInvoke(filterChain, invocation);
 		} else {			
-			try {
-				ExecutorService executor = context.getExecutorService(invocation);
-				Future<ArmorResult> future = executor.submit(new ArmorCallable(filterChain, invocation));
-				long timeout = context.getTimeoutInMillis(invocation);
-				ArmorResult result = future.get(timeout, TimeUnit.MILLISECONDS);
-				Throwable t = result.getException();
-				if (t != null) { throw t; }
-				return result.getValue();
-			} catch (ExecutionException e) {
-				throw e.getCause();   
-			}
+			return armorNewContextInvoke(filterChain, invocation);
+		}
+	}
+	
+	private Object armorCurrentContextInvoke(ArmorFilterChain filterChain, ArmorInvocation invocation) throws Throwable {
+		return filterChain.doFilter(invocation);
+	}
+	
+	private Object armorNewContextInvoke(ArmorFilterChain filterChain, ArmorInvocation invocation) throws Throwable {
+		try {
+			ExecutorService executor = context.getExecutorService(invocation);
+			Future<ArmorResult> future = executor.submit(new ArmorCallable(filterChain, invocation));
+			long timeout = context.getTimeoutInMillis(invocation);
+			ArmorResult result = future.get(timeout, TimeUnit.MILLISECONDS);
+			Throwable t = result.getException();
+			if (t != null) { throw t; }
+			return result.getValue();
+		} catch (ExecutionException e) {
+			throw e.getCause();   
 		}
 	}
 	
