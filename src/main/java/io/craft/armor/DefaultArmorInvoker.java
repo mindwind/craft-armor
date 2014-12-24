@@ -85,11 +85,13 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 		public ArmorResult call() throws Exception {
 			DefaultArmorResult result = new DefaultArmorResult();
 			try {
-				context.setContext();
+				context.set();
 				Object value = filterChain.doFilter(invocation);
 				result.setValue(value);
 			} catch (Throwable t) {
 				result.setException(t);
+			} finally {
+				context.remove();
 			}
 			return result;
 		}
