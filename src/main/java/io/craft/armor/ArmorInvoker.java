@@ -11,9 +11,9 @@ public interface ArmorInvoker {
 	/**
 	 * Execute armor invocation.
 	 * 
-	 * @param invocation
-	 * @return invocation object.
-	 * @throws Throwable
+	 * @param  invocation
+	 * @return invocation result object.
+	 * @throws exception when any invocation error occurs.
 	 */
 	Object invoke(ArmorInvocation invocation) throws Throwable;
 	

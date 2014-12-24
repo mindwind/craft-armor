@@ -1,5 +1,8 @@
 package io.craft.armor.spi;
 
+import io.craft.armor.ArmorContext;
+import io.craft.armor.ArmorInvocation;
+
 
 /**
  * A container of {@link ArmorFilter}.
@@ -10,4 +13,13 @@ package io.craft.armor.spi;
  */
 public interface ArmorFilterChain {
 
+	/**
+	 * Filter the invocation through the filter chain.
+	 * 
+	 * @param  invocation current invocation.
+	 * @return filtered invocation result object.
+	 * @throws exception when any invocation error occurs.
+	 */
+	Object doFilter(ArmorInvocation invocation) throws Throwable;
+	
 }

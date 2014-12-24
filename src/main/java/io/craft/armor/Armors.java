@@ -14,11 +14,13 @@ public class Armors {
 	
 	private static final ArmorInvoker      invoker     ;
 	private static final ArmorProxyFactory proxyFactory;
+	private static final ArmorContext      armorContext;
 	
 	
 	static {
 		invoker      = new DefaultArmorInvoker();
 		proxyFactory = new JdkArmorProxyFactory(invoker);
+		armorContext = new DefaultArmorContext();
 	}
 	
 	
@@ -27,6 +29,10 @@ public class Armors {
 	
 	public static ArmorProxyFactory newArmorProxyFactory() {
 		return proxyFactory;
+	}
+	
+	public static ArmorContext newArmorContext() {
+		return armorContext;
 	}
 	
 }
