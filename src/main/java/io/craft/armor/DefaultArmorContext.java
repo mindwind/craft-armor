@@ -10,16 +10,26 @@ import java.util.concurrent.ExecutorService;
  */
 public class DefaultArmorContext implements ArmorContext {
 	
+	
+	private static final ThreadLocal<ArmorContext> CTX = new ThreadLocal<ArmorContext>();
+	
+	
+	// ~ ------------------------------------------------------------------------------------------------------------
+	
+	
 	@Override
-	public void setContext() {
-		// TODO Auto-generated method stub
-		
+	public void set() {
+		CTX.set(this);
+	}
+	
+	@Override
+	public void remove() {
+		CTX.remove();
 	}
 
 	@Override
 	public boolean isInContext() {
-		// TODO Auto-generated method stub
-		return false;
+		return CTX.get() != null;
 	}
 
 	@Override

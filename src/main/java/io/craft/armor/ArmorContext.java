@@ -15,7 +15,12 @@ public interface ArmorContext {
 	/**
 	 * Set armor context flag.
 	 */
-	void setContext();
+	void set();
+	
+	/**
+	 * Remove armor context flag.
+	 */
+	void remove();
 	
 	/**
 	 * @return true if current invocation to be executed in an armor context.
