@@ -42,7 +42,7 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public ExecutorService getExecutorService(ArmorInvocation invocation) {
-		ArmorAttribute aa = attributes.get(invocation.getKey());
+		ArmorAttribute aa = attributes.get(getKey(invocation));
 		Assert.notNull(aa);
 		ExecutorService es = aa.getExecutorService();
 		Assert.notNull(es);
@@ -55,8 +55,8 @@ public class DefaultArmorContext implements ArmorContext {
 	}
 
 	@Override
-	public ArmorFilterChain getFilterChain(ArmorInvocation invocation) {
-		ArmorAttribute aa = attributes.get(invocation.getKey());
+	public ArmorFilterChain getMethodFilterChain(ArmorInvocation invocation) {
+		ArmorAttribute aa = attributes.get(getKey(invocation));
 		Assert.notNull(aa);
 		ArmorFilterChain chain = aa.getFilterChain();
 		if (chain == null) {
@@ -67,9 +67,57 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public long getTimeoutInMillis(ArmorInvocation invocation) {
-		ArmorAttribute aa = attributes.get(invocation.getKey());
+		ArmorAttribute aa = attributes.get(getKey(invocation));
 		Assert.notNull(aa);
 		return aa.getTimeoutInMillis();
+	}
+
+	@Override
+	public void setDefaultFilterChain(ArmorFilterChain filterChain) {
+		this.filterChain = filterChain;
+	}
+
+	@Override
+	public ArmorFilterChain getDefaultFilterChain() {
+		return filterChain;
+	}
+
+	@Override
+	public void setMethodFilterChain(Class<?> clazz, String method, Class<?>[] parameterTypes, ArmorFilterChain filterChain) {
+		String key = getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		aa.setFilterChain(filterChain);
+	}
+
+	@Override
+	public ArmorFilterChain getMethodFilterChain(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		String key = getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		return aa.getFilterChain();
+	}
+	
+	private String getKey(ArmorInvocation invocation) {
+		Class<?> clazz  = invocation.getDelegateObject().getClass();
+		String method = invocation.getMethod().getName();
+		Class<?>[] parameterTypes = invocation.getParameterTypes();
+		return getKey(clazz, method, parameterTypes);
+	}
+	
+	private String getKey(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		StringBuilder buf = new StringBuilder();
+		buf.append(clazz.getName());
+		buf.append("#");
+		buf.append(method);
+		if (parameterTypes != null) {
+			buf.append("(");
+			for (Class<?> ptype : parameterTypes) {
+				buf.append(ptype.getName()).append(",");
+			}
+			buf.append(")");
+		}
+		return buf.toString();
 	}
 
 }

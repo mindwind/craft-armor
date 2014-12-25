@@ -12,11 +12,6 @@ import java.lang.reflect.Method;
 public interface ArmorInvocation extends Serializable {
 	
 	/**
-	 * @return key string represents this invocation.
-	 */
-	String getKey();
-	
-	/**
 	 * @return armor delegate object
 	 */
 	Object getDelegateObject();

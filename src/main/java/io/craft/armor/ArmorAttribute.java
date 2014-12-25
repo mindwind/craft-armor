@@ -15,6 +15,7 @@ public interface ArmorAttribute {
 	
 	ExecutorService  getExecutorService();
 	ArmorFilterChain getFilterChain();
+	void             setFilterChain(ArmorFilterChain filterChain);
 	long             getTimeoutInMillis();
 	boolean          isOn();
 }

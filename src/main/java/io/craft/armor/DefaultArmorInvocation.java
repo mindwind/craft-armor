@@ -20,21 +20,4 @@ public class DefaultArmorInvocation implements ArmorInvocation {
 	@Getter @Setter private Class<?>[] parameterTypes;
 	@Getter @Setter private Object[]   parameters    ;
 	
-	
-	@Override
-	public String getKey() {
-		StringBuilder buf = new StringBuilder();
-		buf.append(delegateObject.getClass().getName());
-		buf.append("#");
-		buf.append(method.getName());
-		if (parameterTypes != null) {
-			buf.append("(");
-			for (Class<?> clazz : parameterTypes) {
-				buf.append(clazz.getName()).append(",");
-			}
-			buf.append(")");
-		}
-		return buf.toString();
-	}
-	
 }

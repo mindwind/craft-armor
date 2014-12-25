@@ -43,12 +43,47 @@ public interface ArmorContext {
 	boolean isOn();
 	
 	/**
+	 * Set armor default filter chain, it is global for all the methods.
+	 * 
+	 * @param filterChain default global filter chain.
+	 */
+	void setDefaultFilterChain(ArmorFilterChain filterChain);
+	
+	/**
+	 * Get armor default filter chain.
+	 * 
+	 * @return default global filter chain.
+	 */
+	ArmorFilterChain getDefaultFilterChain();
+	
+	/**
+	 * Set armor method filter chain.
+	 * 
+	 * @param clazz          armed service class object.
+	 * @param method         armed service method name.
+	 * @param parameterTypes armed service method parameter types.
+	 * @param filterChain    filter chain of the armed service method.
+	 */
+	void setMethodFilterChain(Class<?> clazz, String method, Class<?>[] parameterTypes, ArmorFilterChain filterChain);
+	
+	/**
 	 * Get armor filter chain for specified invocation.
+	 * It find the method filter chain at first, if it does not exist return default filter chain.
 	 * 
 	 * @param  invocation current invocation.
-	 * @return an armor filter chain.
+	 * @return an armor filter chain for specified invocation.
 	 */
-	ArmorFilterChain getFilterChain(ArmorInvocation invocation);
+	ArmorFilterChain getMethodFilterChain(ArmorInvocation invocation);
+	
+	/**
+	 * Get armor method filter chain.
+	 * 
+	 * @param clazz          armed service class object.
+	 * @param method         armed service method name.
+	 * @param parameterTypes armed service method parameter types.
+	 * @return filter chain of the armed service method, if method has no specified chain return <tt>null</tt>.
+	 */
+	ArmorFilterChain getMethodFilterChain(Class<?> clazz, String method, Class<?>[] parameterTypes);
 	
 	/**
 	 * Get specified invocation timeout in milliseconds.
