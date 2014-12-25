@@ -29,36 +29,6 @@ public interface ArmorService {
 	void off();
 	
 	/**
-	 * Tell armor whether is on or not for specified armed service method.
-	 * 
-	 * @param clazz          armed service class object.
-	 * @param method         armed service method name.
-	 * @param parameterTypes armed service method parameter types.
-	 * @return true when the armor is turn on.
-	 */
-	boolean isOn(Class<?> clazz, String method, Class<?>[] parameterTypes);
-	
-	/**
-	 * Turn on armor method switch, default it is off you should invoke this to turn it on.
-	 * 
-	 * @param clazz          armed service class object.
-	 * @param method         armed service method name.
-	 * @param parameterTypes armed service method parameter types.
-	 * @return true when the armor is turn on.
-	 */
-	void on(Class<?> clazz, String method, Class<?>[] parameterTypes);
-	
-	/**
-	 * Turn off armor method switch.
-	 * 
-	 * @param clazz          armed service class object.
-	 * @param method         armed service method name.
-	 * @param parameterTypes armed service method parameter types.
-	 * @return true when the armor is turn on.
-	 */
-	void off(Class<?> clazz, String method, Class<?>[] parameterTypes);
-	
-	/**
 	 * Tell the specified type filter is on or not.
 	 * 
 	 * @param filterType The filter class
@@ -81,6 +51,20 @@ public interface ArmorService {
 	void off(Class<? extends ArmorFilter> filterType);
 	
 	/**
+	 * Set armor default filter chain, it is global for all the methods.
+	 * 
+	 * @param filterChain default global filter chain.
+	 */
+	void setDefaultFilterChain(ArmorFilterChain filterChain);
+	
+	/**
+	 * Get armor default filter chain.
+	 * 
+	 * @return default global filter chain.
+	 */
+	ArmorFilterChain getDefaultFilterChain();
+	
+	/**
 	 * Set armor method filter chain.
 	 * 
 	 * @param clazz          armed service class object.
@@ -88,5 +72,15 @@ public interface ArmorService {
 	 * @param parameterTypes armed service method parameter types.
 	 * @param filterChain    filter chain of the armed service method.
 	 */
-	void set(Class<?> clazz, String method, Class<?>[] parameterTypes, ArmorFilterChain filterChain);
+	void setMethodFilterChain(Class<?> clazz, String method, Class<?>[] parameterTypes, ArmorFilterChain filterChain);
+	
+	/**
+	 * Get armor method filter chain.
+	 * 
+	 * @param clazz          armed service class object.
+	 * @param method         armed service method name.
+	 * @param parameterTypes armed service method parameter types.
+	 * @return filter chain of the armed service method, if method has no specified chain return <tt>null</tt>.
+	 */
+	ArmorFilterChain getMethodFilterChain(Class<?> clazz, String method, Class<?>[] parameterTypes);
 }
