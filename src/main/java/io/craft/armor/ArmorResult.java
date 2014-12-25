@@ -1,6 +1,8 @@
 package io.craft.armor;
 
 /**
+ * Represents armor context invocation result.
+ * 
  * @author mindwind
  * @version 1.0, Dec 24, 2014
  */

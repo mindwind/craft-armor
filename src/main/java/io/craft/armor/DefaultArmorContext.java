@@ -1,7 +1,10 @@
 package io.craft.armor;
 
 import io.craft.armor.spi.ArmorFilterChain;
+import io.craft.atom.util.Assert;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -12,6 +15,11 @@ public class DefaultArmorContext implements ArmorContext {
 	
 	
 	private static final ThreadLocal<ArmorContext> CTX = new ThreadLocal<ArmorContext>();
+	
+	
+	private boolean                     on          = true                                           ;
+	private Map<String, ArmorAttribute> attributes  = new ConcurrentHashMap<String, ArmorAttribute>();
+	private ArmorFilterChain            filterChain = Armors.defaultFilterChain()                    ;
 	
 	
 	// ~ ------------------------------------------------------------------------------------------------------------
@@ -34,32 +42,34 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public ExecutorService getExecutorService(ArmorInvocation invocation) {
-		// TODO Auto-generated method stub
-		return null;
+		ArmorAttribute aa = attributes.get(invocation.getKey());
+		Assert.notNull(aa);
+		ExecutorService es = aa.getExecutorService();
+		Assert.notNull(es);
+		return es;
 	}
 
 	@Override
 	public boolean isOn() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isOn(ArmorInvocation invocation) {
-		// TODO Auto-generated method stub
-		return false;
+		return on;
 	}
 
 	@Override
 	public ArmorFilterChain getFilterChain(ArmorInvocation invocation) {
-		// TODO Auto-generated method stub
-		return null;
+		ArmorAttribute aa = attributes.get(invocation.getKey());
+		Assert.notNull(aa);
+		ArmorFilterChain chain = aa.getFilterChain();
+		if (chain == null) {
+			chain = filterChain;
+		}
+		return chain;
 	}
 
 	@Override
 	public long getTimeoutInMillis(ArmorInvocation invocation) {
-		// TODO Auto-generated method stub
-		return 0;
+		ArmorAttribute aa = attributes.get(invocation.getKey());
+		Assert.notNull(aa);
+		return aa.getTimeoutInMillis();
 	}
 
 }

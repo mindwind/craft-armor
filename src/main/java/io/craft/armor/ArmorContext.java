@@ -43,14 +43,6 @@ public interface ArmorContext {
 	boolean isOn();
 	
 	/**
-	 * Tell armor whether is on or not for specified invocation.
-	 * 
-	 * @param  invocation current invocation.
-	 * @return true when the armor is turn on.
-	 */
-	boolean isOn(ArmorInvocation invocation);
-	
-	/**
 	 * Get armor filter chain for specified invocation.
 	 * 
 	 * @param  invocation current invocation.

@@ -31,7 +31,7 @@ public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 	
 	
 	public ArmorBeanPostProcessor() {
-		proxyFactory = Armors.newArmorProxyFactory();
+		proxyFactory = Armors.defaultProxyFactory();
 		init();
 	}
 	

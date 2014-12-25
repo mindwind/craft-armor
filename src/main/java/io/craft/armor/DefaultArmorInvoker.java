@@ -18,18 +18,13 @@ import java.util.concurrent.TimeUnit;
 public class DefaultArmorInvoker implements ArmorInvoker {
 	
 	
-	private ArmorContext context = Armors.newArmorContext();
+	private ArmorContext context = Armors.defaultContext();
 	
 
 	@Override
 	public Object invoke(ArmorInvocation invocation) throws Throwable {
-		// Armor master switch is off
+		// Armor is off
 		if (!context.isOn()) { 
-			return rawInvoke(invocation);
-		}
-		
-		// Armor method switch is off
-		if (!context.isOn(invocation)) {  
 			return rawInvoke(invocation);
 		}
 		
