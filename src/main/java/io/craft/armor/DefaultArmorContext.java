@@ -98,6 +98,38 @@ public class DefaultArmorContext implements ArmorContext {
 		return aa.getFilterChain();
 	}
 	
+	@Override
+	public long getTimeoutInMillis(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		String key = getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		return aa.getTimeoutInMillis();
+	}
+
+	@Override
+	public void setTimeoutInMillis(Class<?> clazz, String method, Class<?>[] parameterTypes, long timeoutInMillis) {
+		String key = getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		aa.setTimeoutInMillis(timeoutInMillis);
+	}
+
+	@Override
+	public int getThreadSize(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		String key = getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		return aa.getThreadSize();
+	}
+
+	@Override
+	public void setThreadSize(Class<?> clazz, String method, Class<?>[] parameterTypes, int threads) {
+		String key = getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		aa.setThreadSize(threads);
+	}
+	
 	private String getKey(ArmorInvocation invocation) {
 		Class<?> clazz  = invocation.getDelegateObject().getClass();
 		String method = invocation.getMethod().getName();
@@ -111,9 +143,9 @@ public class DefaultArmorContext implements ArmorContext {
 		buf.append("#");
 		buf.append(method);
 		if (parameterTypes != null) {
-			buf.append("(");
+			buf.append("( ");
 			for (Class<?> ptype : parameterTypes) {
-				buf.append(ptype.getName()).append(",");
+				buf.append(ptype.getName()).append(" ");
 			}
 			buf.append(")");
 		}

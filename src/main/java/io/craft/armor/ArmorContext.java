@@ -93,4 +93,44 @@ public interface ArmorContext {
 	 */
 	long getTimeoutInMillis(ArmorInvocation invocation);
 	
+	/**
+	 * Get armor method timeout in milliseconds.
+	 * 
+	 * @param clazz          armed service class object.
+	 * @param method         armed service method name.
+	 * @param parameterTypes armed service method parameter types.
+	 * @return timeout in milliseconds
+	 */
+	long getTimeoutInMillis(Class<?> clazz, String method, Class<?>[] parameterTypes);
+	
+	/**
+	 * Set armor method invocation timeout in milliseconds.
+	 * 
+	 * @param clazz           armed service class object.
+	 * @param method          armed service method name.
+	 * @param parameterTypes  armed service method parameter types.
+	 * @param timeoutInMillis armed service method timeout in milliseconds.
+	 */
+	void setTimeoutInMillis(Class<?> clazz, String method, Class<?>[] parameterTypes, long timeoutInMillis);
+	
+	/**
+	 * Get armor method thread size.
+	 * 
+	 * @param clazz           armed service class object.
+	 * @param method          armed service method name.
+	 * @param parameterTypes  armed service method parameter types.
+	 * @return thread size.
+	 */
+	int getThreadSize(Class<?> clazz, String method, Class<?>[] parameterTypes);
+	
+	/**
+	 * Set armor method thread size.
+	 * 
+	 * @param clazz           armed service class object.
+	 * @param method          armed service method name.
+	 * @param parameterTypes  armed service method parameter types.
+	 * @param threads         armed service method thread size.
+	 */
+	void setThreadSize(Class<?> clazz, String method, Class<?>[] parameterTypes, int threads);
+	
 }
