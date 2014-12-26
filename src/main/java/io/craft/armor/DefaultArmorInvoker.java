@@ -57,7 +57,8 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 	}
 	
 	private Object armorCurrentContextInvoke(ArmorFilterChain filterChain, ArmorInvocation invocation) throws Throwable {
-		return filterChain.doFilter(invocation);
+		filterChain.doFilter(invocation);
+		return rawInvoke(invocation);
 	}
 	
 	private Object armorNewContextInvoke(ArmorFilterChain filterChain, ArmorInvocation invocation) throws Throwable {
@@ -86,7 +87,8 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 			DefaultArmorResult result = new DefaultArmorResult();
 			try {
 				context.set();
-				Object value = filterChain.doFilter(invocation);
+				filterChain.doFilter(invocation);
+				Object value = rawInvoke(invocation);
 				result.setValue(value);
 			} catch (Throwable t) {
 				result.setException(t);
