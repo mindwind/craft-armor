@@ -1,7 +1,7 @@
-package io.craft.armor.spi;
+package io.craft.armor.api;
 
 import io.craft.armor.Armors;
-import io.craft.armor.api.Armor;
+import io.craft.armor.spi.ArmorProxyFactory;
 import lombok.Getter;
 import lombok.Setter;
 
