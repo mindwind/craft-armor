@@ -23,24 +23,26 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 
 	@Override
 	public Object invoke(ArmorInvocation invocation) throws Throwable {
-		// Armor is off
-		if (!context.isOn()) { 
-			return rawInvoke(invocation);
+		try {
+			// Armor is off
+			if (!context.isOn()) { 
+				return rawInvoke(invocation);
+			}
+			
+			// Armor context invoke
+			return armorInvoke(invocation);
+		} catch (InvocationTargetException e) {
+			throw e.getTargetException();
+		} catch (ExecutionException e) {
+			throw e.getCause();   
 		}
-		
-		// Armor context invoke
-		return armorInvoke(invocation);
 	}
 	
 	private Object rawInvoke(ArmorInvocation invocation) throws Throwable {
-		try {
-			Object   delegate = invocation.getDelegateObject();
-			Method   method   = invocation.getMethod();
-			Object[] args     = invocation.getParameters();
-			return method.invoke(delegate, args);
-		} catch (InvocationTargetException e) {
-			throw e.getTargetException();
-		}
+		Object   delegate = invocation.getDelegateObject();
+		Method   method   = invocation.getMethod();
+		Object[] args     = invocation.getParameters();
+		return method.invoke(delegate, args);
 	}
 	
 	
@@ -59,16 +61,12 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 	}
 	
 	private Object armorNewContextInvoke(ArmorFilterChain filterChain, ArmorInvocation invocation) throws Throwable {
-		try {
-			ExecutorService executor = context.getExecutorService(invocation);
-			Future<ArmorResult> future = executor.submit(new ArmorCallable(filterChain, invocation));
-			long timeout = context.getTimeoutInMillis(invocation);
-			ArmorResult result = future.get(timeout, TimeUnit.MILLISECONDS);
-			if (result.hasException()) { throw result.getException(); }
-			return result.getValue();
-		} catch (ExecutionException e) {
-			throw e.getCause();   
-		}
+		ExecutorService executor = context.getExecutorService(invocation);
+		Future<ArmorResult> future = executor.submit(new ArmorCallable(filterChain, invocation));
+		long timeout = context.getTimeoutInMillis(invocation);
+		ArmorResult result = future.get(timeout, TimeUnit.MILLISECONDS);
+		if (result.hasException()) { throw result.getException(); }
+		return result.getValue();
 	}
 	
 	private class ArmorCallable implements Callable<ArmorResult> {
