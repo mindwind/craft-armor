@@ -64,8 +64,7 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 			Future<ArmorResult> future = executor.submit(new ArmorCallable(filterChain, invocation));
 			long timeout = context.getTimeoutInMillis(invocation);
 			ArmorResult result = future.get(timeout, TimeUnit.MILLISECONDS);
-			Throwable t = result.getException();
-			if (t != null) { throw t; }
+			if (result.hasException()) { throw result.getException(); }
 			return result.getValue();
 		} catch (ExecutionException e) {
 			throw e.getCause();   

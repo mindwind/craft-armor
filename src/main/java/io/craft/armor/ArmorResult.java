@@ -21,5 +21,12 @@ public interface ArmorResult {
 	 * @return exception. if no exception return null.
 	 */
 	Throwable getException();
+	
+	/**
+     * Tell result has exception or not.
+     * 
+     * @return true if it has exception.
+     */
+    boolean hasException();
 
 }

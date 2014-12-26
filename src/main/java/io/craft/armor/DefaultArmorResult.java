@@ -14,6 +14,11 @@ public class DefaultArmorResult implements ArmorResult {
 	
 	@Getter @Setter private Object    value    ;
 	@Getter @Setter private Throwable exception;
+	
+	@Override
+	public boolean hasException() {
+		return exception != null;
+	}
 
 
 }
