@@ -16,13 +16,13 @@ public interface ArmorFilterChain {
 	 * Filter the invocation through the filter chain.
 	 * 
 	 * @param  invocation current invocation.
-	 * @return filtered invocation result object.
 	 * @throws exception when any invocation error occurs.
 	 */
-	Object doFilter(ArmorInvocation invocation) throws Throwable;
+	void doFilter(ArmorInvocation invocation) throws Throwable;
 	
 	/**
 	 * Add the specified filter just before the filter type in this chain.
+	 * If no one is matched to specified type, add it at the beginning of this chain.
      * 
 	 * @param filterType the target filter type
 	 * @param filter     the filter to add
@@ -31,6 +31,7 @@ public interface ArmorFilterChain {
 	
 	/**
 	 * Add the specified filter just after the filter type in this chain.
+	 * If no one is matched to specified type, add it at the end of this chain.
 	 * 
 	 * @param filterType the target filter type
 	 * @param filter     the filter to add
@@ -54,19 +55,25 @@ public interface ArmorFilterChain {
     /**
      * Remove the filter of the specified type.
      * If there's more than one filter with the specified type, the first match will be removed.
+     * If no one is matched to specified type, throw <code>IllegalArgumentException</code>.
      * 
      * @param filterType the target filter type
+     * @return the removed filter
      */
-    void remove(Class<? extends ArmorFilter> filterType);
+    ArmorFilter remove(Class<? extends ArmorFilter> filterType);
     
     /**
      * Remove the specified filter at the end of this chain.
+     * 
+     * @return the last filter from this chain.
      */
-    void removeLast();
+    ArmorFilter removeLast();
     
     /**
      * Remove the specified filter at the beginning of this chain.
+     * 
+     * @return the first filter from this chain.
      */
-    void removeFirst();
+    ArmorFilter removeFirst();
 	
 }
