@@ -1,7 +1,5 @@
 package io.craft.armor;
 
-import io.craft.armor.spi.ArmorFilter;
-
 import java.util.concurrent.RejectedExecutionException;
 
 /**
@@ -11,14 +9,13 @@ import java.util.concurrent.RejectedExecutionException;
  * @author mindwind
  * @version 1.0, Dec 29, 2014
  */
-public class DegradeArmorFilter implements ArmorFilter {
-	
-	
-	private ArmorContext context = Armors.defaultContext();
+public class DegradeArmorFilter extends AbstractArmorFilter {
 	
 
 	@Override
 	public void doFilter(ArmorInvocation invocation) throws Throwable {
+		if (isOff(this.getClass())) { return; }
+		
 		Class<?>   clazz          = invocation.getDelegateObject().getClass();
 		String     method         = invocation.getMethod().getName();
 		Class<?>[] parameterTypes = invocation.getParameterTypes();
