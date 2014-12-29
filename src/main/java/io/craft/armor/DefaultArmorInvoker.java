@@ -45,7 +45,6 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 		return method.invoke(delegate, args);
 	}
 	
-	
 	private Object armorInvoke(ArmorInvocation invocation) throws Throwable {
 		boolean inContext = context.isInContext();
 		ArmorFilterChain filterChain = context.getMethodFilterChain(invocation);
