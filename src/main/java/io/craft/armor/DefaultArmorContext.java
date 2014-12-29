@@ -42,7 +42,7 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public ExecutorService getExecutorService(ArmorInvocation invocation) {
-		ArmorAttribute aa = attributes.get(getKey(invocation));
+		ArmorAttribute aa = attributes.get(Armors.getKey(invocation));
 		Assert.notNull(aa);
 		ExecutorService es = aa.getExecutorService();
 		Assert.notNull(es);
@@ -56,7 +56,7 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public ArmorFilterChain getMethodFilterChain(ArmorInvocation invocation) {
-		ArmorAttribute aa = attributes.get(getKey(invocation));
+		ArmorAttribute aa = attributes.get(Armors.getKey(invocation));
 		Assert.notNull(aa);
 		ArmorFilterChain chain = aa.getFilterChain();
 		if (chain == null) {
@@ -67,7 +67,7 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public long getTimeoutInMillis(ArmorInvocation invocation) {
-		ArmorAttribute aa = attributes.get(getKey(invocation));
+		ArmorAttribute aa = attributes.get(Armors.getKey(invocation));
 		Assert.notNull(aa);
 		return aa.getTimeoutInMillis();
 	}
@@ -84,7 +84,7 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public void setMethodFilterChain(Class<?> clazz, String method, Class<?>[] parameterTypes, ArmorFilterChain filterChain) {
-		String key = getKey(clazz, method, parameterTypes);
+		String key = Armors.getKey(clazz, method, parameterTypes);
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
 		aa.setFilterChain(filterChain);
@@ -92,7 +92,7 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public ArmorFilterChain getMethodFilterChain(Class<?> clazz, String method, Class<?>[] parameterTypes) {
-		String key = getKey(clazz, method, parameterTypes);
+		String key = Armors.getKey(clazz, method, parameterTypes);
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
 		return aa.getFilterChain();
@@ -100,7 +100,7 @@ public class DefaultArmorContext implements ArmorContext {
 	
 	@Override
 	public long getTimeoutInMillis(Class<?> clazz, String method, Class<?>[] parameterTypes) {
-		String key = getKey(clazz, method, parameterTypes);
+		String key = Armors.getKey(clazz, method, parameterTypes);
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
 		return aa.getTimeoutInMillis();
@@ -108,7 +108,7 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public void setTimeoutInMillis(Class<?> clazz, String method, Class<?>[] parameterTypes, long timeoutInMillis) {
-		String key = getKey(clazz, method, parameterTypes);
+		String key = Armors.getKey(clazz, method, parameterTypes);
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
 		aa.setTimeoutInMillis(timeoutInMillis);
@@ -116,7 +116,7 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public int getThreadSize(Class<?> clazz, String method, Class<?>[] parameterTypes) {
-		String key = getKey(clazz, method, parameterTypes);
+		String key = Armors.getKey(clazz, method, parameterTypes);
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
 		return aa.getThreadSize();
@@ -124,37 +124,15 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public void setThreadSize(Class<?> clazz, String method, Class<?>[] parameterTypes, int threads) {
-		String key = getKey(clazz, method, parameterTypes);
+		String key = Armors.getKey(clazz, method, parameterTypes);
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
 		aa.setThreadSize(threads);
 	}
-	
-	private String getKey(ArmorInvocation invocation) {
-		Class<?> clazz  = invocation.getDelegateObject().getClass();
-		String method = invocation.getMethod().getName();
-		Class<?>[] parameterTypes = invocation.getParameterTypes();
-		return getKey(clazz, method, parameterTypes);
-	}
-	
-	private String getKey(Class<?> clazz, String method, Class<?>[] parameterTypes) {
-		StringBuilder buf = new StringBuilder();
-		buf.append(clazz.getName());
-		buf.append("#");
-		buf.append(method);
-		if (parameterTypes != null) {
-			buf.append("( ");
-			for (Class<?> ptype : parameterTypes) {
-				buf.append(ptype.getName()).append(" ");
-			}
-			buf.append(")");
-		}
-		return buf.toString();
-	}
 
 	@Override
 	public void degrade(Class<?> clazz, String method, Class<?>[] parameterTypes) {
-		String key = getKey(clazz, method, parameterTypes);
+		String key = Armors.getKey(clazz, method, parameterTypes);
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
 		aa.degrade();
@@ -162,7 +140,7 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public void upgrade(Class<?> clazz, String method, Class<?>[] parameterTypes) {
-		String key = getKey(clazz, method, parameterTypes);
+		String key = Armors.getKey(clazz, method, parameterTypes);
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
 		aa.upgrade();
@@ -170,7 +148,7 @@ public class DefaultArmorContext implements ArmorContext {
 
 	@Override
 	public boolean isDegraded(Class<?> clazz, String method, Class<?>[] parameterTypes) {
-		String key = getKey(clazz, method, parameterTypes);
+		String key = Armors.getKey(clazz, method, parameterTypes);
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
 		return aa.isDegraded();
