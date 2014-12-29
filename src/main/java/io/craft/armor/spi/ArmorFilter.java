@@ -9,7 +9,6 @@ import io.craft.armor.ArmorInvocation;
  * <ul>
  *   <li>Invocation logging</li>
  *   <li>Invocation transfer</li>
- *   <li>Performance monitoring</li>
  *   <li>Degrade protection</li>
  *   <li>Overload control</li>
  *   <li>and many more.</li>
