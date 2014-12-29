@@ -1,5 +1,6 @@
 package io.craft.armor;
 
+import io.craft.armor.spi.ArmorFilter;
 import io.craft.armor.spi.ArmorFilterChain;
 import io.craft.atom.util.Assert;
 
@@ -19,6 +20,7 @@ public class DefaultArmorContext implements ArmorContext {
 	
 	private volatile boolean                     on          = true                                           ;
 	private          Map<String, ArmorAttribute> attributes  = new ConcurrentHashMap<String, ArmorAttribute>();
+	private          Map<String, Boolean>        filterTypes = new ConcurrentHashMap<String, Boolean>()       ;
 	private          ArmorFilterChain            filterChain = Armors.defaultFilterChain()                    ;
 	
 	
@@ -52,6 +54,16 @@ public class DefaultArmorContext implements ArmorContext {
 	@Override
 	public boolean isOn() {
 		return on;
+	}
+	
+	@Override
+	public void on() {
+		this.on = true;
+	}
+
+	@Override
+	public void off() {
+		this.on = false;
 	}
 
 	@Override
@@ -152,6 +164,31 @@ public class DefaultArmorContext implements ArmorContext {
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
 		return aa.isDegraded();
+	}
+
+	@Override
+	public boolean isOn(Class<? extends ArmorFilter> filterType) {
+		Assert.notNull(filterType);
+		boolean on = true;
+		Boolean b = filterTypes.get(filterType.getName());
+		if (b == null) {
+			on = true;
+		} else {
+			on = b;
+		}
+		return on;
+	}
+
+	@Override
+	public void on(Class<? extends ArmorFilter> filterType) {
+		Assert.notNull(filterType);
+		filterTypes.put(filterType.getName(), true);
+	}
+
+	@Override
+	public void off(Class<? extends ArmorFilter> filterType) {
+		Assert.notNull(filterType);
+		filterTypes.put(filterType.getName(), false);
 	}
 
 }

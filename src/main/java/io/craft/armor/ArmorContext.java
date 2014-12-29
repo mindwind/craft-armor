@@ -1,5 +1,6 @@
 package io.craft.armor;
 
+import io.craft.armor.spi.ArmorFilter;
 import io.craft.armor.spi.ArmorFilterChain;
 
 import java.util.concurrent.ExecutorService;
@@ -41,6 +42,38 @@ public interface ArmorContext {
 	 * @return true when the armor is turn on.
 	 */
 	boolean isOn();
+	
+	/**
+	 * Turn on armor master switch, default it is off you should invoke this to turn it on.
+	 */
+	void on();
+	
+	/**
+	 * Turn off armor master switch.
+	 */
+	void off();
+	
+	/**
+	 * Tell the specified type filter is on or not.
+	 * 
+	 * @param filterType The filter class
+	 * @return true when this type filter is on.
+	 */
+	boolean isOn(Class<? extends ArmorFilter> filterType);
+	
+	/**
+	 * Turn on the specified type filter.
+	 * 
+	 * @param filterType The filter class to turn on.
+	 */
+	void on(Class<? extends ArmorFilter> filterType);
+	
+	/**
+	 * Turn off the specified type filter.
+	 * 
+	 * @param filterType The filter class to turn off.
+	 */
+	void off(Class<? extends ArmorFilter> filterType);
 	
 	/**
 	 * Set armor default filter chain, it is global for all the methods.
