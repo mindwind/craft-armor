@@ -17,9 +17,9 @@ public class DefaultArmorContext implements ArmorContext {
 	private static final ThreadLocal<ArmorContext> CTX = new ThreadLocal<ArmorContext>();
 	
 	
-	private boolean                     on          = true                                           ;
-	private Map<String, ArmorAttribute> attributes  = new ConcurrentHashMap<String, ArmorAttribute>();
-	private ArmorFilterChain            filterChain = Armors.defaultFilterChain()                    ;
+	private volatile boolean                     on          = true                                           ;
+	private          Map<String, ArmorAttribute> attributes  = new ConcurrentHashMap<String, ArmorAttribute>();
+	private          ArmorFilterChain            filterChain = Armors.defaultFilterChain()                    ;
 	
 	
 	// ~ ------------------------------------------------------------------------------------------------------------
@@ -150,6 +150,30 @@ public class DefaultArmorContext implements ArmorContext {
 			buf.append(")");
 		}
 		return buf.toString();
+	}
+
+	@Override
+	public void degrade(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		String key = getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		aa.degrade();
+	}
+
+	@Override
+	public void upgrade(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		String key = getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		aa.upgrade();
+	}
+
+	@Override
+	public boolean isDegraded(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		String key = getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		return aa.isDegraded();
 	}
 
 }

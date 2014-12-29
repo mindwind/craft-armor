@@ -19,10 +19,11 @@ import lombok.ToString;
 public class DefaultArmorAttribute implements ArmorAttribute {
 	
 	
-	@Getter @Setter long               timeoutInMillis;
-	@Getter @Setter int                threads        ;
-	@Getter @Setter ThreadPoolExecutor executorService;
-	@Getter @Setter ArmorFilterChain   filterChain    ;
+	@Getter @Setter private volatile boolean            degrade        ;
+	@Getter @Setter private volatile long               timeoutInMillis;
+	@Getter @Setter private volatile int                threads        ;
+	@Getter @Setter private volatile ThreadPoolExecutor executorService;
+	@Getter @Setter private volatile ArmorFilterChain   filterChain    ;
 	
 	
 	public DefaultArmorAttribute() {
@@ -46,6 +47,21 @@ public class DefaultArmorAttribute implements ArmorAttribute {
 	@Override
 	public int getThreadSize() {
 		return executorService.getCorePoolSize();
+	}
+
+	@Override
+	public void degrade() {
+		this.degrade = true;
+	}
+
+	@Override
+	public void upgrade() {
+		this.degrade = false;
+	}
+
+	@Override
+	public boolean isDegraded() {
+		return degrade;
 	}
 
 }

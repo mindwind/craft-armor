@@ -24,7 +24,7 @@ public class DefaultArmorFilterChain implements ArmorFilterChain {
 	public void doFilter(ArmorInvocation invocation) throws Throwable {
 		LinkedList<ArmorFilter> chain = chainRef.get();
 		for (ArmorFilter filter : chain) {
-			filter.dofilter(invocation);
+			filter.doFilter(invocation);
 		}
 	}
 

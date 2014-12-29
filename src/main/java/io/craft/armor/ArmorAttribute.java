@@ -18,6 +18,9 @@ public interface ArmorAttribute {
 	void             setFilterChain(ArmorFilterChain filterChain);
 	void             setTimeoutInMillis(long timeoutInMillis);
 	void             setThreadSize(int threads);
+	void             degrade();
+	void             upgrade();
+	boolean          isDegraded();
 	int              getThreadSize();
 	long             getTimeoutInMillis();
 	

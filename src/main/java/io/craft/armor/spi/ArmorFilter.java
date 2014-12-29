@@ -26,6 +26,6 @@ public interface ArmorFilter {
 	 * @param  invocation current invocation
 	 * @throws Throwable exception when any invocation error occurs.
 	 */
-	void dofilter(ArmorInvocation invocation) throws Throwable;
+	void doFilter(ArmorInvocation invocation) throws Throwable;
 	
 }

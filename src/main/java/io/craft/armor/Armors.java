@@ -23,7 +23,7 @@ public class Armors {
 		invoker      = new DefaultArmorInvoker();
 		proxyFactory = new JdkArmorProxyFactory(invoker);
 		context      = new DefaultArmorContext();
-		filterChain  = null; // TODO
+		filterChain  = new DefaultArmorFilterChain(); // TODO
 	}
 	
 	
@@ -40,6 +40,29 @@ public class Armors {
 	
 	public static ArmorFilterChain defaultFilterChain() {
 		return filterChain;
+	}
+	
+	
+	static String getKey(ArmorInvocation invocation) {
+		Class<?> clazz  = invocation.getDelegateObject().getClass();
+		String method = invocation.getMethod().getName();
+		Class<?>[] parameterTypes = invocation.getParameterTypes();
+		return getKey(clazz, method, parameterTypes);
+	}
+	
+	static String getKey(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		StringBuilder buf = new StringBuilder();
+		buf.append(clazz.getName());
+		buf.append("#");
+		buf.append(method);
+		if (parameterTypes != null) {
+			buf.append("( ");
+			for (Class<?> ptype : parameterTypes) {
+				buf.append(ptype.getName()).append(" ");
+			}
+			buf.append(")");
+		}
+		return buf.toString();
 	}
 	
 }
