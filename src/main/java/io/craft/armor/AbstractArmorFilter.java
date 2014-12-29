@@ -8,6 +8,7 @@ import io.craft.armor.spi.ArmorFilter;
  */
 abstract public class AbstractArmorFilter implements ArmorFilter {
 
+	
 	protected ArmorContext context = Armors.defaultContext();
 
 	
