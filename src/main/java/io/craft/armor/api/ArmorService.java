@@ -123,4 +123,34 @@ public interface ArmorService {
 	 * @param threads         armed service method thread size.
 	 */
 	void setThreadSize(Class<?> clazz, String method, Class<?>[] parameterTypes, int threads);
+	
+	/**
+	 * Degrade armor method.
+	 * 
+	 * @param clazz           armed service class object.
+	 * @param method          armed service method name.
+	 * @param parameterTypes  armed service method parameter types.
+	 */
+	void degrade(Class<?> clazz, String method, Class<?>[] parameterTypes);
+	
+	/**
+	 * Upgrade armor method, it is an inverse operation of {@link #degrade(Class, String, Class[])}.
+	 * To a normal method which never be degraded, invoke this has no effect.
+	 * 
+	 * @param clazz           armed service class object.
+	 * @param method          armed service method name.
+	 * @param parameterTypes  armed service method parameter types.
+	 */
+	void upgrade(Class<?> clazz, String method, Class<?>[] parameterTypes);
+	
+	/**
+	 * Tell the method is degraded or not.
+	 * 
+	 * @param clazz           armed service class object.
+	 * @param method          armed service method name.
+	 * @param parameterTypes  armed service method parameter types.
+	 * @return true when it is degraded.
+	 */
+	boolean isDegraded(Class<?> clazz, String method, Class<?>[] parameterTypes);
+	
 }
