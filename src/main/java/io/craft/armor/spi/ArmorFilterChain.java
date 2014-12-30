@@ -1,6 +1,5 @@
 package io.craft.armor.spi;
 
-import io.craft.armor.ArmorInvocation;
 
 
 /**

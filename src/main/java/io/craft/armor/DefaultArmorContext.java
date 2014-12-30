@@ -2,6 +2,7 @@ package io.craft.armor;
 
 import io.craft.armor.spi.ArmorFilter;
 import io.craft.armor.spi.ArmorFilterChain;
+import io.craft.armor.spi.ArmorInvocation;
 import io.craft.atom.util.Assert;
 
 import java.util.Map;

@@ -1,5 +1,7 @@
 package io.craft.armor;
 
+import io.craft.armor.spi.ArmorInvocation;
+
 /**
  * Armor invoker, launch the armor context invocation.
  * 

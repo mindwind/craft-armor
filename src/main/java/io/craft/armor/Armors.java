@@ -1,6 +1,8 @@
 package io.craft.armor;
 
 import io.craft.armor.spi.ArmorFilterChain;
+import io.craft.armor.spi.ArmorInvocation;
+import io.craft.armor.spi.ArmorListener;
 import io.craft.armor.spi.ArmorProxyFactory;
 
 
@@ -17,12 +19,14 @@ public class Armors {
 	private static final ArmorProxyFactory proxyFactory;
 	private static final ArmorContext      context     ;
 	private static final ArmorFilterChain  filterChain ;
+	private static final ArmorListener     listener    ;
 	
 	
 	static {
 		invoker      = new DefaultArmorInvoker();
 		proxyFactory = new JdkArmorProxyFactory(invoker);
 		context      = new DefaultArmorContext();
+		listener     = new NoopArmorListener();
 		filterChain  = new DefaultArmorFilterChain(); // TODO
 	}
 	
@@ -42,6 +46,9 @@ public class Armors {
 		return filterChain;
 	}
 	
+	public static ArmorListener defaultListener() {
+		return listener;
+	}
 	
 	static String getKey(ArmorInvocation invocation) {
 		Class<?> clazz  = invocation.getDelegateObject().getClass();

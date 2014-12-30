@@ -1,6 +1,8 @@
 package io.craft.armor;
 
 import io.craft.armor.spi.ArmorFilterChain;
+import io.craft.armor.spi.ArmorInvocation;
+import io.craft.armor.spi.ArmorListener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,7 +20,8 @@ import java.util.concurrent.TimeUnit;
 public class DefaultArmorInvoker implements ArmorInvoker {
 	
 	
-	private ArmorContext context = Armors.defaultContext();
+	private ArmorContext  context  = Armors.defaultContext();
+	private ArmorListener listener = Armors.defaultListener(); 
 	
 
 	@Override
@@ -30,11 +33,19 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 			}
 			
 			// Armor context invoke
-			return armorInvoke(invocation);
+			listener.beforeInvoke(invocation);
+			Object result = armorInvoke(invocation);
+			listener.afterInvoke(invocation, result);
+			return result;
 		} catch (InvocationTargetException e) {
+			listener.errorInvoke(invocation, e.getTargetException());
 			throw e.getTargetException();
 		} catch (ExecutionException e) {
+			listener.errorInvoke(invocation, e.getCause());
 			throw e.getCause();   
+		} catch (Throwable t) {
+			listener.errorInvoke(invocation, t);
+			throw t;
 		}
 	}
 	

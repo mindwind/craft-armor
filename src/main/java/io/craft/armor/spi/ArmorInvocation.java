@@ -1,4 +1,4 @@
-package io.craft.armor;
+package io.craft.armor.spi;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
