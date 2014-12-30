@@ -3,6 +3,7 @@ package io.craft.armor;
 import io.craft.armor.spi.ArmorFilter;
 import io.craft.armor.spi.ArmorFilterChain;
 import io.craft.armor.spi.ArmorInvocation;
+import io.craft.armor.spi.ArmorListener;
 import io.craft.atom.util.Assert;
 
 import java.util.Map;
@@ -20,6 +21,7 @@ public class DefaultArmorContext implements ArmorContext {
 	
 	
 	private volatile boolean                     on          = true                                           ;
+	private volatile ArmorListener               listener    = Armors.defaultListener();
 	private          Map<String, ArmorAttribute> attributes  = new ConcurrentHashMap<String, ArmorAttribute>();
 	private          Map<String, Boolean>        filterTypes = new ConcurrentHashMap<String, Boolean>()       ;
 	private          ArmorFilterChain            filterChain = Armors.defaultFilterChain()                    ;
@@ -190,6 +192,23 @@ public class DefaultArmorContext implements ArmorContext {
 	public void off(Class<? extends ArmorFilter> filterType) {
 		Assert.notNull(filterType);
 		filterTypes.put(filterType.getName(), false);
+	}
+
+	@Override
+	public void register(ArmorListener listener) {
+		Assert.notNull(listener);
+		this.listener = listener;
+	}
+
+	@Override
+	public void unregister(ArmorListener listener) {
+		Assert.notNull(listener);
+		this.listener = Armors.defaultListener();
+	}
+
+	@Override
+	public ArmorListener listener() {
+		return listener;
 	}
 
 }

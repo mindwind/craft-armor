@@ -2,6 +2,7 @@ package io.craft.armor.api;
 
 import io.craft.armor.spi.ArmorFilter;
 import io.craft.armor.spi.ArmorFilterChain;
+import io.craft.armor.spi.ArmorListener;
 
 /**
  * Provide armor internal monitor and management API.
@@ -153,4 +154,17 @@ public interface ArmorService {
 	 */
 	boolean isDegraded(Class<?> clazz, String method, Class<?>[] parameterTypes);
 	
+	/**
+	 * Register custom listener.
+	 * 
+	 * @param listener a custom listener.
+	 */
+	void register(ArmorListener listener);
+	
+	/**
+	 * Unregister custom listener.
+	 * 
+	 * @param listener a custom listener.
+	 */
+	void unregister(ArmorListener listener);
 }

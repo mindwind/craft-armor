@@ -3,6 +3,7 @@ package io.craft.armor;
 import io.craft.armor.spi.ArmorFilter;
 import io.craft.armor.spi.ArmorFilterChain;
 import io.craft.armor.spi.ArmorInvocation;
+import io.craft.armor.spi.ArmorListener;
 
 import java.util.concurrent.ExecutorService;
 
@@ -195,5 +196,24 @@ public interface ArmorContext {
 	 * @return true when it is degraded.
 	 */
 	boolean isDegraded(Class<?> clazz, String method, Class<?>[] parameterTypes);
+	
+	/**
+	 * Register custom listener.
+	 * 
+	 * @param listener a custom listener.
+	 */
+	void register(ArmorListener listener);
+	
+	/**
+	 * Unregister custom listener.
+	 * 
+	 * @param listener a custom listener.
+	 */
+	void unregister(ArmorListener listener);
+	
+	/**
+	 * @return registered armor listner.
+	 */
+	ArmorListener listener();
 	
 }

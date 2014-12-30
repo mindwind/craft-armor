@@ -3,6 +3,7 @@ package io.craft.armor;
 import io.craft.armor.spi.ArmorFilterChain;
 import io.craft.armor.spi.ArmorInvocation;
 import io.craft.armor.spi.ArmorListener;
+import io.craft.atom.util.Assert;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,11 +22,12 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 	
 	
 	private ArmorContext  context  = Armors.defaultContext();
-	private ArmorListener listener = Armors.defaultListener(); 
 	
 
 	@Override
 	public Object invoke(ArmorInvocation invocation) throws Throwable {
+		ArmorListener listener = context.listener();
+		Assert.notNull(listener);
 		try {
 			// Armor is off
 			if (!context.isOn()) { 
