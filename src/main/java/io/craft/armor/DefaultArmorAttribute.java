@@ -29,7 +29,7 @@ public class DefaultArmorAttribute implements ArmorAttribute {
 	public DefaultArmorAttribute() {
 		timeoutInMillis = 3000;
 		threads         = Runtime.getRuntime().availableProcessors();
-		executorService = new ThreadPoolExecutor(threads, threads, 60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), new NamedThreadFactory("craft-armor"));
+		executorService = new ThreadPoolExecutor(1, threads, 60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), new NamedThreadFactory("craft-armor"));
 		executorService.allowCoreThreadTimeOut(true);
 	}
 	
