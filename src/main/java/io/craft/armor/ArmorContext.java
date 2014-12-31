@@ -216,4 +216,20 @@ public interface ArmorContext {
 	 */
 	ArmorListener listener();
 	
+	/**
+	 * Set transfer link for service object.
+	 * This link means when an invocation to delegate object, it would be transfered to link object.
+	 * The delegate object and link object must implements same service interface.
+	 * 
+	 * @param delegateObject original delegate service object.
+	 * @param linkObject     link object.
+	 */
+	void setTransferLink(Object delegateObject, Object linkObject);
+	
+	/**
+	 * Remove transfer link for service object.
+	 * 
+	 * @param delegateObject original delegate service object.
+	 */
+	void removeTransferLink(Object delegateObject);
 }

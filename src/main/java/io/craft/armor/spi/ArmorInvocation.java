@@ -17,6 +17,13 @@ public interface ArmorInvocation extends Serializable {
 	Object getDelegateObject();
 	
 	/**
+	 * Set armor delegate object.
+	 * 
+	 * @param delegateObject
+	 */
+	void setDelegateObject(Object delegateObject);
+	
+	/**
 	 * @return method
 	 */
 	Method getMethod();
