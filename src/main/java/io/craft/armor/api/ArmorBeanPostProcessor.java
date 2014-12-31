@@ -1,7 +1,12 @@
 package io.craft.armor.api;
 
+import io.craft.armor.ArmorContext;
 import io.craft.armor.Armors;
+import io.craft.armor.DefaultArmorAttribute;
 import io.craft.armor.spi.ArmorProxyFactory;
+
+import java.lang.reflect.Method;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +31,10 @@ public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 
 	
 	private static final Logger LOG = LoggerFactory.getLogger(ArmorBeanPostProcessor.class);
+	
+	
 	@Getter @Setter private ArmorProxyFactory proxyFactory;
+	                private ArmorContext      context     ;
 	
 	
 	// ~ -------------------------------------------------------------------------------------------------------------
@@ -34,6 +42,7 @@ public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 	
 	public ArmorBeanPostProcessor() {
 		proxyFactory = Armors.defaultProxyFactory();
+		context      = Armors.defaultContext();
 		init();
 	}
 	
@@ -61,8 +70,15 @@ public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 			return bean;
 		}
 		
+		for (Class<?> clazz : interfaces) {
+			Method[] methods = clazz.getMethods();
+			for (Method method : methods) {
+				context.setAttribute(bean.getClass(), method.getName(), method.getParameterTypes(), new DefaultArmorAttribute());
+			}
+		}
+		Object proxy = proxyFactory.getProxy(bean, interfaces);
 		LOG.debug("[CRAFT-ARMOR] Create armor proxy for |bean={}|", bean);
-		return proxyFactory.getProxy(bean, interfaces);
+		return proxy;
 	}
 
 }

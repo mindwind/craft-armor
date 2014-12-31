@@ -31,8 +31,9 @@ public class DefaultArmorContext implements ArmorContext {
 	// ~ ------------------------------------------------------------------------------------------------------------
 	
 	
-	public DefaultArmorContext(ArmorListener listener) {
-		this.listener = listener;
+	public DefaultArmorContext(ArmorListener listener, ArmorFilterChain filterChain) {
+		this.listener    = listener;
+		this.filterChain = filterChain;
 	}
 	
 	
@@ -52,6 +53,13 @@ public class DefaultArmorContext implements ArmorContext {
 	@Override
 	public boolean isInContext() {
 		return CTX.get() != null;
+	}
+	
+	@Override
+	public void setAttribute(Class<?> clazz, String method, Class<?>[] parameterTypes, ArmorAttribute attribute) {
+		Assert.notNull(attribute);
+		String key = Armors.getKey(clazz, method, parameterTypes);
+		attributes.put(key, attribute);
 	}
 
 	@Override

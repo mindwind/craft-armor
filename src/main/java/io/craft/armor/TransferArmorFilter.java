@@ -12,6 +12,10 @@ import io.craft.armor.spi.ArmorInvocation;
 public class TransferArmorFilter extends AbstractArmorFilter {
 	
 
+	public TransferArmorFilter(ArmorContext context) {
+		super(context);
+	}
+
 	@Override
 	public void doFilter(ArmorInvocation invocation) throws Throwable {
 		if (isOff(this.getClass())) { return; }

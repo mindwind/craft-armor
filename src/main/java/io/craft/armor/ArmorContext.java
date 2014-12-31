@@ -31,6 +31,16 @@ public interface ArmorContext {
 	boolean isInContext();
 	
 	/**
+	 * Set armor method attribute.
+	 * 
+	 * @param clazz
+	 * @param method
+	 * @param parameterTypes
+	 * @param attribute
+	 */
+	void setAttribute(Class<?> clazz, String method, Class<?>[] parameterTypes, ArmorAttribute attribute);
+	
+	/**
 	 * Get an armor provided {@link ExecutorService} object to execute current invocation.
 	 * 
 	 * @param  invocation current invocation.
@@ -240,4 +250,5 @@ public interface ArmorContext {
 	 * @param delegateObject original delegate service object.
 	 */
 	void removeTransferObject(Object delegateObject);
+	
 }

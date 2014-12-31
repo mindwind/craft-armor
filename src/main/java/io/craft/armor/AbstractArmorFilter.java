@@ -10,6 +10,11 @@ abstract public class AbstractArmorFilter implements ArmorFilter {
 
 	
 	protected ArmorContext context = Armors.defaultContext();
+	
+	
+	public AbstractArmorFilter(ArmorContext context) {
+		this.context = context;
+	}
 
 	
 	protected boolean isOff(Class<? extends ArmorFilter> filterType) {

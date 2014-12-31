@@ -14,6 +14,10 @@ import java.util.concurrent.RejectedExecutionException;
 public class DegradeArmorFilter extends AbstractArmorFilter {
 	
 
+	public DegradeArmorFilter(ArmorContext context) {
+		super(context);
+	}
+
 	@Override
 	public void doFilter(ArmorInvocation invocation) throws Throwable {
 		if (isOff(this.getClass())) { return; }

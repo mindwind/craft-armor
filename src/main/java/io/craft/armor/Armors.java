@@ -4,6 +4,7 @@ import io.craft.armor.spi.ArmorFilterChain;
 import io.craft.armor.spi.ArmorInvocation;
 import io.craft.armor.spi.ArmorListener;
 import io.craft.armor.spi.ArmorProxyFactory;
+import io.craft.atom.util.Assert;
 
 
 /**
@@ -23,13 +24,13 @@ public class Armors {
 	
 	
 	static {
+		filterChain  = new DefaultArmorFilterChain();
 		listener     = new NoopArmorListener();
-		context      = new DefaultArmorContext(listener);
+		context      = new DefaultArmorContext(listener, filterChain);
 		invoker      = new DefaultArmorInvoker(context);
 		proxyFactory = new JdkArmorProxyFactory(invoker);
-		filterChain  = new DefaultArmorFilterChain();
-		filterChain.addLast(new DegradeArmorFilter());
-		filterChain.addLast(new TransferArmorFilter());
+		filterChain.addLast(new DegradeArmorFilter(context));
+		filterChain.addLast(new TransferArmorFilter(context));
 	}
 	
 	
@@ -60,6 +61,7 @@ public class Armors {
 	}
 	
 	static String getKey(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		Assert.notNull(clazz);
 		StringBuilder buf = new StringBuilder();
 		buf.append(clazz.getName());
 		buf.append("#");
