@@ -21,9 +21,10 @@ public class DefaultArmorContext implements ArmorContext {
 	
 	
 	private volatile boolean                     on          = true                                           ;
-	private volatile ArmorListener               listener    = Armors.defaultListener();
+	private volatile ArmorListener               listener    = Armors.defaultListener()                       ;
 	private          Map<String, ArmorAttribute> attributes  = new ConcurrentHashMap<String, ArmorAttribute>();
 	private          Map<String, Boolean>        filterTypes = new ConcurrentHashMap<String, Boolean>()       ;
+	private          Map<Object, Object>         transfers   = new ConcurrentHashMap<Object, Object>()        ;
 	private          ArmorFilterChain            filterChain = Armors.defaultFilterChain()                    ;
 	
 	
@@ -209,6 +210,25 @@ public class DefaultArmorContext implements ArmorContext {
 	@Override
 	public ArmorListener listener() {
 		return listener;
+	}
+
+	@Override
+	public Object getTransferObject(Object delegateObject) {
+		Assert.notNull(delegateObject);
+		return transfers.get(delegateObject);
+	}
+
+	@Override
+	public void setTransferObject(Object delegateObject, Object transferObject) {
+		Assert.notNull(delegateObject);
+		Assert.notNull(transferObject);
+		transfers.put(delegateObject, transferObject);
+	}
+
+	@Override
+	public void removeTransferObject(Object delegateObject) {
+		Assert.notNull(delegateObject);
+		transfers.remove(delegateObject);
 	}
 
 }
