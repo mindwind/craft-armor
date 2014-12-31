@@ -21,7 +21,12 @@ import java.util.concurrent.TimeUnit;
 public class DefaultArmorInvoker implements ArmorInvoker {
 	
 	
-	private ArmorContext  context  = Armors.defaultContext();
+	private ArmorContext context;
+	
+	
+	public DefaultArmorInvoker(ArmorContext context) {
+		this.context = context;
+	}
 	
 
 	@Override

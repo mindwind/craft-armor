@@ -23,11 +23,13 @@ public class Armors {
 	
 	
 	static {
-		invoker      = new DefaultArmorInvoker();
-		proxyFactory = new JdkArmorProxyFactory(invoker);
-		context      = new DefaultArmorContext();
 		listener     = new NoopArmorListener();
-		filterChain  = new DefaultArmorFilterChain(); // TODO
+		context      = new DefaultArmorContext(listener);
+		invoker      = new DefaultArmorInvoker(context);
+		proxyFactory = new JdkArmorProxyFactory(invoker);
+		filterChain  = new DefaultArmorFilterChain();
+		filterChain.addLast(new DegradeArmorFilter());
+		filterChain.addLast(new TransferArmorFilter());
 	}
 	
 	

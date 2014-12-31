@@ -31,6 +31,14 @@ public class DefaultArmorContext implements ArmorContext {
 	// ~ ------------------------------------------------------------------------------------------------------------
 	
 	
+	public DefaultArmorContext(ArmorListener listener) {
+		this.listener = listener;
+	}
+	
+	
+	// ~ ------------------------------------------------------------------------------------------------------------
+	
+	
 	@Override
 	public void set() {
 		CTX.set(this);
