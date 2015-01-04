@@ -13,7 +13,7 @@ public class ArmorFactory {
 	/**
 	 * @return {@link ArmorService} instance.
 	 */
-	public static ArmorService newArmorService() {
+	public static ArmorService armorService() {
 		return Armors.armorService();
 	}
 	
