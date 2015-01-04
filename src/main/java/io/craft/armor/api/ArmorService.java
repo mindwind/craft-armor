@@ -174,14 +174,14 @@ public interface ArmorService {
 	 * The delegate object and link object must implements same service interface.
 	 * 
 	 * @param delegateObject original delegate service object.
-	 * @param linkObject     link object.
+	 * @param transferObject transfer object.
 	 */
-	void setTransferLink(Object delegateObject, Object linkObject);
+	void setTransferObject(Object delegateObject, Object transferObject);
 	
 	/**
 	 * Remove transfer link for service object.
 	 * 
 	 * @param delegateObject original delegate service object.
 	 */
-	void removeTransferLink(Object delegateObject);
+	void removeTransferObject(Object delegateObject);
 }
