@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
@@ -21,12 +22,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring.xml")
-public class TestArmor {
+public class TestArmor extends AbstractJUnit4SpringContextTests {
 	
-	
-	@Autowired private DemoService  demoService ;
-               private ArmorService armorService;
-               
+	           
+	@Autowired private DemoService        demoService ;
+               private ArmorService       armorService;
+           
+
     @Before
     public void before() {
     	armorService = ArmorFactory.armorService();
@@ -60,6 +62,17 @@ public class TestArmor {
 	
 	@Test
 	public void testArmorTransfer() {
-		
+		DemoService ds1 = (DemoService) armorService.getDelegateObject("demoService");
+		DemoService ds2 = (DemoService) armorService.getDelegateObject("demoService2");
+		boolean isProxy = Proxy.isProxyClass(ds1.getClass()) || Proxy.isProxyClass(ds2.getClass());
+		Assert.assertFalse(isProxy);
+		String in = "test";
+		String out = demoService.echo(in);
+		Assert.assertEquals(out, in);
+		armorService.setTransferObject(ds1, ds2);
+		out = demoService.echo(in);
+		Assert.assertEquals(out, in + in);
+		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor transfer. ", CaseCounter.incr(3)));
 	}
+
 }
