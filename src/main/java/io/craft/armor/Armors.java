@@ -59,6 +59,7 @@ public class Armors {
 	}
 	
 	static String getKey(ArmorInvocation invocation) {
+		Assert.notNull(invocation);
 		Class<?> clazz  = invocation.getDelegateObject().getClass();
 		String method = invocation.getMethod().getName();
 		Class<?>[] parameterTypes = invocation.getParameterTypes();

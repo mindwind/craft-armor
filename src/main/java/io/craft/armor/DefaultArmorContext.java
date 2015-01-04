@@ -22,6 +22,7 @@ public class DefaultArmorContext implements ArmorContext {
 	
 	private volatile boolean                     on          = true                                           ;
 	private volatile ArmorListener               listener    = Armors.defaultListener()                       ;
+	private          Map<String, Object>         objects     = new ConcurrentHashMap<String, Object>()        ;
 	private          Map<String, ArmorAttribute> attributes  = new ConcurrentHashMap<String, ArmorAttribute>();
 	private          Map<String, Boolean>        filterTypes = new ConcurrentHashMap<String, Boolean>()       ;
 	private          Map<Object, Object>         transfers   = new ConcurrentHashMap<Object, Object>()        ;
@@ -60,6 +61,11 @@ public class DefaultArmorContext implements ArmorContext {
 		Assert.notNull(attribute);
 		String key = Armors.getKey(clazz, method, parameterTypes);
 		attributes.put(key, attribute);
+	}
+	
+	@Override
+	public ArmorAttribute getAttribute(ArmorInvocation invocation) {
+		return attributes.get(Armors.getKey(invocation));
 	}
 
 	@Override
@@ -245,6 +251,21 @@ public class DefaultArmorContext implements ArmorContext {
 	public void removeTransferObject(Object delegateObject) {
 		Assert.notNull(delegateObject);
 		transfers.remove(delegateObject);
+	}
+
+
+	@Override
+	public Object getDelegateObject(String name) {
+		Assert.notNull(name);
+		return objects.get(name);
+	}
+
+
+	@Override
+	public void registerDelegateObject(String name, Object delegateObject) {
+		Assert.notNull(name);
+		Assert.notNull(delegateObject);
+		objects.put(name, delegateObject);
 	}
 
 }

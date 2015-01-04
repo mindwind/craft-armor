@@ -3,7 +3,6 @@ package io.craft.armor;
 import io.craft.armor.api.ArmorService;
 import io.craft.armor.spi.ArmorFilterChain;
 import io.craft.armor.spi.ArmorInvocation;
-import io.craft.armor.spi.ArmorListener;
 
 import java.util.concurrent.ExecutorService;
 
@@ -41,6 +40,14 @@ public interface ArmorContext extends ArmorService {
 	void setAttribute(Class<?> clazz, String method, Class<?>[] parameterTypes, ArmorAttribute attribute);
 	
 	/**
+	 * Get armor method attribute.
+	 * 
+	 * @param invocation current invocation.
+	 * @return attribute object.
+	 */
+	ArmorAttribute getAttribute(ArmorInvocation invocation);
+	
+	/**
 	 * Get an armor provided {@link ExecutorService} object to execute current invocation.
 	 * 
 	 * @param  invocation current invocation.
@@ -66,16 +73,11 @@ public interface ArmorContext extends ArmorService {
 	long getTimeoutInMillis(ArmorInvocation invocation);
 	
 	/**
-	 * @return registered armor listner.
-	 */
-	ArmorListener listener();
-	
-	/**
-	 * Get transfer object by original delegate object.
+	 * Register delegate object with name in Armor.
 	 * 
-	 * @param  delegateObject
-	 * @return transfer object.
+	 * @param name the name of delegate object.
+	 * @param delegateObject delegate object instance.
 	 */
-	Object getTransferObject(Object delegateObject);
+	void registerDelegateObject(String name, Object delegateObject);
 	
 }

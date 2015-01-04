@@ -39,6 +39,11 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 				return rawInvoke(invocation);
 			}
 			
+			// Armor does not proxy public methods not declared in its implemented interfaces.
+			if (context.getAttribute(invocation) == null) {
+				return rawInvoke(invocation);
+			}
+			
 			// Armor context invoke
 			listener.beforeInvoke(invocation);
 			Object result = armorInvoke(invocation);

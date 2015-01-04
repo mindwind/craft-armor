@@ -169,6 +169,11 @@ public interface ArmorService {
 	void unregister(ArmorListener listener);
 	
 	/**
+	 * @return registered armor listner.
+	 */
+	ArmorListener listener();
+	
+	/**
 	 * Set transfer link for service object.
 	 * This link means when an invocation to delegate object, it would be transfered to link object.
 	 * The delegate object and link object must implements same service interface.
@@ -184,4 +189,20 @@ public interface ArmorService {
 	 * @param delegateObject original delegate service object.
 	 */
 	void removeTransferObject(Object delegateObject);
+	
+	/**
+	 * Get transfer object by original delegate object.
+	 * 
+	 * @param  delegateObject
+	 * @return transfer object.
+	 */
+	Object getTransferObject(Object delegateObject);
+	
+	/**
+	 * Get delegate object by name.
+	 * 
+	 * @param name delegate object name, if use armor with spring it is the bean name (default). 
+	 * @return raw delegate object.
+	 */
+	Object getDelegateObject(String name);
 }

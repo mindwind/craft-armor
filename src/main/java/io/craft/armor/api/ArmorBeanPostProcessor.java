@@ -77,6 +77,7 @@ public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 			}
 		}
 		Object proxy = proxyFactory.getProxy(bean, interfaces);
+		context.registerDelegateObject(beanName, bean);
 		LOG.debug("[CRAFT-ARMOR] Create armor proxy for |bean={}|", bean);
 		return proxy;
 	}
