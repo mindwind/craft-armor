@@ -1,5 +1,6 @@
 package io.craft.armor;
 
+import io.craft.armor.api.ArmorService;
 import io.craft.armor.spi.ArmorFilterChain;
 import io.craft.armor.spi.ArmorInvocation;
 import io.craft.armor.spi.ArmorListener;
@@ -43,7 +44,7 @@ public class Armors {
 	
 	public static ArmorContext defaultContext() {
 		return context;
-	}
+	} 
 	
 	public static ArmorFilterChain defaultFilterChain() {
 		return filterChain;
@@ -51,6 +52,10 @@ public class Armors {
 	
 	public static ArmorListener defaultListener() {
 		return listener;
+	}
+	
+	public static ArmorService armorService() {
+		return context;
 	}
 	
 	static String getKey(ArmorInvocation invocation) {
