@@ -1,5 +1,6 @@
 package io.craft.armor;
 
+import io.craft.armor.api.ArmorExecutionException;
 import io.craft.armor.api.ArmorTimeoutException;
 import io.craft.armor.spi.ArmorFilterChain;
 import io.craft.armor.spi.ArmorInvocation;
@@ -56,12 +57,11 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 			throw e.getCause();
 		} catch (ExecutionException e) {
 			listener.errorInvoke(invocation, e);
-			throw e.getCause();   
+			throw new ArmorExecutionException(e);   
 		} catch (TimeoutException e) {
 			listener.errorInvoke(invocation, e);
 			throw new ArmorTimeoutException(e);   
-		} 
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			listener.errorInvoke(invocation, t);
 			throw t;
 		}
