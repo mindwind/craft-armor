@@ -2,6 +2,7 @@ package io.craft.armor;
 
 import io.craft.armor.api.ArmorFactory;
 import io.craft.armor.api.ArmorService;
+import io.craft.armor.api.ArmorTimeoutException;
 import io.craft.atom.test.CaseCounter;
 
 import java.lang.reflect.Proxy;
@@ -88,7 +89,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		armorService.setTimeoutInMillis(DemoServiceImpl.class, "timeout", new Class<?>[] { int.class }, 25);
 		try {
 			demoService.timeout(50);
-		} catch (Exception e) {
+		} catch (ArmorTimeoutException e) {
 			Assert.assertTrue(true);
 		}
 		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor timeout. ", CaseCounter.incr(1)));
