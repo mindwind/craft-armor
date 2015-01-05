@@ -4,6 +4,7 @@ import io.craft.armor.api.Armor;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Service;
 public class DemoServiceImpl implements DemoService {
 	
 	
-	private boolean ok = false;
+	@Autowired protected DemoChildService demoChildService;
+	           protected boolean          ok              ;
 	
 	
 	@PostConstruct
@@ -31,6 +33,11 @@ public class DemoServiceImpl implements DemoService {
 	@Override
 	public boolean isOk() {
 		return ok;
+	}
+
+	@Override
+	public String echoCascade(String in) {
+		return demoChildService.echo(in);
 	}
 
 }

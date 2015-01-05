@@ -8,6 +8,7 @@ package io.craft.armor;
 public interface DemoService {
 	
 	String echo(String in);
+	String echoCascade(String in);
 	boolean isOk();
 	
 }

@@ -74,5 +74,13 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		Assert.assertEquals(out, in + in);
 		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor transfer. ", CaseCounter.incr(3)));
 	}
+	
+	@Test
+	public void testArmorCascade() {
+		String in = "test";
+		String out = demoService.echoCascade(in);
+		Assert.assertEquals(out, in);
+		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor cascade. ", CaseCounter.incr(1)));
+	}
 
 }
