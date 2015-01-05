@@ -40,4 +40,12 @@ public class DemoServiceImpl implements DemoService {
 		return demoChildService.echo(in);
 	}
 
+	@Override
+	public void timeout(int timeoutInMillis) {
+		try {
+			Thread.sleep(timeoutInMillis);
+		} catch (InterruptedException e) {
+		}
+	}
+
 }

@@ -50,7 +50,7 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 			listener.afterInvoke(invocation, result);
 			return result;
 		} catch (InvocationTargetException e) {
-			listener.errorInvoke(invocation, e.getTargetException());
+			listener.errorInvoke(invocation, e.getCause());
 			throw e.getTargetException();
 		} catch (ExecutionException e) {
 			listener.errorInvoke(invocation, e.getCause());
