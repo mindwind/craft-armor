@@ -1,5 +1,6 @@
 package io.craft.armor;
 
+import io.craft.armor.api.ArmorDegradeException;
 import io.craft.armor.api.ArmorFactory;
 import io.craft.armor.api.ArmorService;
 import io.craft.armor.api.ArmorTimeoutException;
@@ -51,7 +52,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		try {
 			demoService.echo(in);
 			Assert.fail();
-		} catch (Exception e) {
+		} catch (ArmorDegradeException e) {
 			Assert.assertTrue(true);
 		}
 		armorService.upgrade(DemoServiceImpl.class, "echo", new Class<?>[] { String.class });

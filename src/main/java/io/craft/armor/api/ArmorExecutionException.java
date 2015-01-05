@@ -1,7 +1,7 @@
 package io.craft.armor.api;
 
 /**
- * Exception thrown when armor execute error.
+ * Exception thrown when armor execution error.
  * 
  * @author mindwind
  * @version 1.0, Jan 5, 2015

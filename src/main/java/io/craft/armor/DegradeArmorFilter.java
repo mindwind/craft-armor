@@ -1,8 +1,7 @@
 package io.craft.armor;
 
+import io.craft.armor.api.ArmorDegradeException;
 import io.craft.armor.spi.ArmorInvocation;
-
-import java.util.concurrent.RejectedExecutionException;
 
 /**
  * Degrade armor filter.
@@ -27,7 +26,7 @@ public class DegradeArmorFilter extends AbstractArmorFilter {
 		Class<?>[] parameterTypes = invocation.getParameterTypes();
 		boolean degrade = context.isDegraded(clazz, method, parameterTypes);
 		if (degrade) {
-			throw new RejectedExecutionException(String.format("Method |%s| is degraded.", Armors.getKey(invocation)));
+			throw new ArmorDegradeException(String.format("Method |%s| is degraded.", Armors.getKey(invocation)));
 		}
 	}
 
