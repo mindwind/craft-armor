@@ -48,4 +48,9 @@ public class DemoServiceImpl implements DemoService {
 		}
 	}
 
+	@Override
+	public int echo(int i) {
+		return i;
+	}
+
 }

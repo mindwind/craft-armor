@@ -9,6 +9,7 @@ public interface DemoService {
 	
 	String echo(String in);
 	String echoCascade(String in);
+	int echo(int i);
 	boolean isOk();
 	void timeout(int timeoutInMillis);
 	

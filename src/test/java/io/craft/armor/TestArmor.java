@@ -27,8 +27,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class TestArmor extends AbstractJUnit4SpringContextTests {
 	
 	           
-	@Autowired private DemoService        demoService ;
-               private ArmorService       armorService;
+	@Autowired private DemoService  demoService ;
+               private ArmorService armorService;
            
 
     @Before
