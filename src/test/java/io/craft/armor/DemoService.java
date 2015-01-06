@@ -12,5 +12,6 @@ public interface DemoService {
 	int echo(int i);
 	boolean isOk();
 	void timeout(int timeoutInMillis);
+	void throwException() throws IllegalAccessException;
 	
 }

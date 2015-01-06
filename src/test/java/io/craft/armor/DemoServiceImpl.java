@@ -53,4 +53,9 @@ public class DemoServiceImpl implements DemoService {
 		return i;
 	}
 
+	@Override
+	public void throwException() throws IllegalAccessException {
+		throw new IllegalAccessException();
+	}
+
 }
