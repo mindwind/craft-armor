@@ -13,7 +13,7 @@
 	<artifactId>craft-armor</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>craft-armor</name>
-	<description>Arm your application and enhance it’s robustness.</description>
+	<description>An in-process service container to arm your application and enhance it’s robustness.</description>
 	<url>https://github.com/mindwind/craft-armor</url>
 
 	<licenses>
