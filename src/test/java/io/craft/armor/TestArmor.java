@@ -74,6 +74,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		armorService.setTransferObject(ds1, ds2);
 		out = demoService.echo(in);
 		Assert.assertEquals(out, in + in);
+		armorService.removeTransferObject(ds1);
 		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor transfer. ", CaseCounter.incr(3)));
 	}
 	
