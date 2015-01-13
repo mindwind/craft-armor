@@ -1,11 +1,9 @@
 package io.craft.armor.spi;
 
 
-
 /**
  * Armor proxy factory provides method for getting or creating dynamic proxy instance.
  * 
- * @see RpcInvoker
  * @author mindwind
  * @version 1.0, Aug 20, 2014
  */
