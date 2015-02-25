@@ -126,6 +126,25 @@ public interface ArmorService {
 	void setThreadSize(Class<?> clazz, String method, Class<?>[] parameterTypes, int threads);
 	
 	/**
+	 * Set armor method in asynchronous execution mode.
+	 * 
+	 * @param clazz           armed service class object.
+	 * @param method          armed service method name.
+	 * @param parameterTypes  armed service method parameter types.
+	 */
+	void setAsync(Class<?> clazz, String method, Class<?>[] parameterTypes);
+	
+	/**
+	 * Tell armor method in asynchronous execution mode or not.
+	 * 
+	 * @param clazz           armed service class object.
+	 * @param method          armed service method name.
+	 * @param parameterTypes  armed service method parameter types.
+	 * @return true if method is in asynchronous execution mode
+	 */
+	boolean isAsync(Class<?> clazz, String method, Class<?>[] parameterTypes);
+	
+	/**
 	 * Degrade armor method.
 	 * 
 	 * @param clazz           armed service class object.

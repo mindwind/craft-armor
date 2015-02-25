@@ -268,4 +268,21 @@ public class DefaultArmorContext implements ArmorContext {
 		objects.put(name, delegateObject);
 	}
 
+
+	@Override
+	public void setAsync(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		String key = Armors.getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		aa.setAsync();
+	}
+
+	@Override
+	public boolean isAsync(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+		String key = Armors.getKey(clazz, method, parameterTypes);
+		ArmorAttribute aa = attributes.get(key);
+		Assert.notNull(aa);
+		return aa.isAsync();
+	}
+
 }

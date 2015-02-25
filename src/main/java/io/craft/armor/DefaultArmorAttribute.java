@@ -20,6 +20,7 @@ public class DefaultArmorAttribute implements ArmorAttribute {
 	
 	
 	@Getter @Setter private volatile boolean            degrade        ;
+	@Getter @Setter private volatile boolean            async          ;
 	@Getter @Setter private volatile long               timeoutInMillis;
 	@Getter @Setter private volatile int                threads        ;
 	@Getter @Setter private volatile ThreadPoolExecutor executorService;
@@ -62,6 +63,12 @@ public class DefaultArmorAttribute implements ArmorAttribute {
 	@Override
 	public boolean isDegraded() {
 		return degrade;
+	}
+
+
+	@Override
+	public void setAsync() {
+		this.async = true;
 	}
 
 }

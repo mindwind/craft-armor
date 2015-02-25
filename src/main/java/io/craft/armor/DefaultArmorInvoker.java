@@ -92,6 +92,13 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 	private Object armorNewContextInvoke(ArmorFilterChain filterChain, ArmorInvocation invocation) throws Throwable {
 		ExecutorService executor = context.getExecutorService(invocation);
 		Future<ArmorResult> future = executor.submit(new ArmorCallable(filterChain, invocation));
+		
+		// Asynchronous execution mode
+		if (context.isAsync(invocation.getDelegateObject().getClass(), invocation.getMethod().getName(), invocation.getParameterTypes())) {
+			return null;
+		}
+		
+		// Synchronous execution mode
 		long timeout = context.getTimeoutInMillis(invocation);
 		ArmorResult result = future.get(timeout, TimeUnit.MILLISECONDS);
 		if (result.hasException()) { throw result.getException(); }
