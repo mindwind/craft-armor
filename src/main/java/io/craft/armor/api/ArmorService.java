@@ -131,8 +131,9 @@ public interface ArmorService {
 	 * @param clazz           armed service class object.
 	 * @param method          armed service method name.
 	 * @param parameterTypes  armed service method parameter types.
+	 * @param async           armed service method async flag.
 	 */
-	void setAsync(Class<?> clazz, String method, Class<?>[] parameterTypes);
+	void setAsync(Class<?> clazz, String method, Class<?>[] parameterTypes, boolean async);
 	
 	/**
 	 * Tell armor method in asynchronous execution mode or not.

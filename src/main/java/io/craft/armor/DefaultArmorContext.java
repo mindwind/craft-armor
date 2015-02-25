@@ -270,11 +270,11 @@ public class DefaultArmorContext implements ArmorContext {
 
 
 	@Override
-	public void setAsync(Class<?> clazz, String method, Class<?>[] parameterTypes) {
+	public void setAsync(Class<?> clazz, String method, Class<?>[] parameterTypes, boolean async) {
 		String key = Armors.getKey(clazz, method, parameterTypes);
 		ArmorAttribute aa = attributes.get(key);
 		Assert.notNull(aa);
-		aa.setAsync();
+		aa.setAsync(async);
 	}
 
 	@Override

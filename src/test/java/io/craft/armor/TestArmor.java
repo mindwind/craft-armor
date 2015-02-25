@@ -107,5 +107,16 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		}
 		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor throw exception. ", CaseCounter.incr(1)));
 	}
+	
+	@Test
+	public void testArmorAsync() {
+		armorService.setAsync(DemoServiceImpl.class, "timeout", new Class<?>[] { int.class }, true);
+		try {
+			demoService.timeout(10 * 1000);
+		} catch (ArmorTimeoutException e) {
+			Assert.fail();
+		}
+		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor async. ", CaseCounter.incr(1)));
+	}
 
 }

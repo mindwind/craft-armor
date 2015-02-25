@@ -65,10 +65,4 @@ public class DefaultArmorAttribute implements ArmorAttribute {
 		return degrade;
 	}
 
-
-	@Override
-	public void setAsync() {
-		this.async = true;
-	}
-
 }
