@@ -38,4 +38,7 @@ public class DemoServiceImpl2 implements DemoService {
 	@Override
 	public void throwException() throws IllegalAccessException {}
 
+	@Override
+	public void arm() {}
+
 }

@@ -74,11 +74,16 @@ public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 		for (Class<?> clazz : interfaces) {
 			Method[] methods = clazz.getMethods();
 			for (Method method : methods) {
-				Arm arm = method.getAnnotation(Arm.class);
+				Arm arm = null;
+				try {
+					arm = bean.getClass().getMethod(method.getName(), method.getParameterTypes()).getAnnotation(Arm.class);
+				} catch (SecurityException e) {} catch (NoSuchMethodException e) {}    // These two exception is impossible really thrown.
 				ArmorAttribute attr = new DefaultArmorAttribute();
-				if (arm.async())       { attr.setAsync(true); }
-				if (arm.threads() > 0) { attr.setThreadSize(arm.threads()); } 
-				if (arm.timeout() > 0) { attr.setTimeoutInMillis(arm.timeout() * 1000); }
+				if (arm != null) {
+					if (arm.async())       { attr.setAsync(true); }
+				    if (arm.threads() > 0) { attr.setThreadSize(arm.threads()); } 
+				    if (arm.timeout() > 0) { attr.setTimeoutInMillis(arm.timeout() * 1000); }
+				}
 				context.setAttribute(bean.getClass(), method.getName(), method.getParameterTypes(), attr);
 			}
 		}

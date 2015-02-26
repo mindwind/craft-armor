@@ -13,5 +13,6 @@ public interface DemoService {
 	boolean isOk();
 	void timeout(int timeoutInMillis);
 	void throwException() throws IllegalAccessException;
+	void arm();
 	
 }

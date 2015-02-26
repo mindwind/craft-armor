@@ -1,5 +1,6 @@
 package io.craft.armor;
 
+import io.craft.armor.api.Arm;
 import io.craft.armor.api.Armor;
 
 import javax.annotation.PostConstruct;
@@ -57,5 +58,9 @@ public class DemoServiceImpl implements DemoService {
 	public void throwException() throws IllegalAccessException {
 		throw new IllegalAccessException();
 	}
+
+	@Override
+	@Arm(async = true, timeout = 5, threads = 10)
+	public void arm() {}
 
 }
