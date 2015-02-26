@@ -42,7 +42,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		Assert.assertTrue(isProxy);
 		boolean isOk = demoService.isOk();
 		Assert.assertTrue(isOk);
-		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor startup. ", CaseCounter.incr(2)));
+		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor startup. ", CaseCounter.incr(2)));
 	}
 	
 	@Test
@@ -59,7 +59,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		
 		String out = demoService.echo(in);
 		Assert.assertEquals(out, in);
-		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor degrade. ", CaseCounter.incr(2)));
+		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor degrade. ", CaseCounter.incr(2)));
 	}
 	
 	@Test
@@ -75,7 +75,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		out = demoService.echo(in);
 		Assert.assertEquals(out, in + in);
 		armorService.removeTransferObject(ds1);
-		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor transfer. ", CaseCounter.incr(3)));
+		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor transfer. ", CaseCounter.incr(3)));
 	}
 	
 	@Test
@@ -83,7 +83,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		String in = "test";
 		String out = demoService.echoCascade(in);
 		Assert.assertEquals(out, in);
-		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor cascade. ", CaseCounter.incr(1)));
+		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor cascade. ", CaseCounter.incr(1)));
 	}
 	
 	@Test
@@ -94,7 +94,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		} catch (ArmorTimeoutException e) {
 			Assert.assertTrue(true);
 		}
-		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor timeout. ", CaseCounter.incr(1)));
+		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor timeout. ", CaseCounter.incr(1)));
 	}
 	
 	@Test
@@ -105,7 +105,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		} catch (IllegalAccessException e) {
 			Assert.assertTrue(true);
 		}
-		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor throw exception. ", CaseCounter.incr(1)));
+		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor throw exception. ", CaseCounter.incr(1)));
 	}
 	
 	@Test
@@ -116,7 +116,18 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		} catch (ArmorTimeoutException e) {
 			Assert.fail();
 		}
-		System.out.println(String.format("[CRAFT-ATOM-NIO] (^_^)  <%s>  Case -> test armor async. ", CaseCounter.incr(1)));
+		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor async. ", CaseCounter.incr(1)));
+	}
+	
+	@Test
+	public void testArmAnnotation() {
+		boolean async = armorService.isAsync(DemoServiceImpl.class, "arm", new Class<?>[] {});
+		int threads = armorService.getThreadSize(DemoServiceImpl.class, "arm", new Class<?>[] {});
+		long timeoutInMillis = armorService.getTimeoutInMillis(DemoServiceImpl.class, "arm", new Class<?>[] {});
+		Assert.assertEquals(true, async);
+		Assert.assertEquals(10, threads);
+		Assert.assertEquals(5 * 1000, timeoutInMillis);
+		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test arm annotation. ", CaseCounter.incr(3)));
 	}
 
 }
