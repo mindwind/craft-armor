@@ -1,5 +1,6 @@
 package io.craft.armor.api;
 
+import io.craft.armor.ArmorAttribute;
 import io.craft.armor.ArmorContext;
 import io.craft.armor.Armors;
 import io.craft.armor.DefaultArmorAttribute;
@@ -73,7 +74,12 @@ public class ArmorBeanPostProcessor implements BeanPostProcessor, Ordered {
 		for (Class<?> clazz : interfaces) {
 			Method[] methods = clazz.getMethods();
 			for (Method method : methods) {
-				context.setAttribute(bean.getClass(), method.getName(), method.getParameterTypes(), new DefaultArmorAttribute());
+				Arm arm = method.getAnnotation(Arm.class);
+				ArmorAttribute attr = new DefaultArmorAttribute();
+				if (arm.async())       { attr.setAsync(true); }
+				if (arm.threads() > 0) { attr.setThreadSize(arm.threads()); } 
+				if (arm.timeout() > 0) { attr.setTimeoutInMillis(arm.timeout() * 1000); }
+				context.setAttribute(bean.getClass(), method.getName(), method.getParameterTypes(), attr);
 			}
 		}
 		Object proxy = proxyFactory.getProxy(bean, interfaces);
