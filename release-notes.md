@@ -12,7 +12,12 @@
 ------------------------------------------------------------------------------
 
 
+## craft-armor 1.1.0  UPGRADE URGENCY: MODERATE
+
+  * [NEW] - Async execution mode support.
+  * [NEW] - @Arm annotation for some static configuration.
+
 
 ## craft-armor 1.0.0
 
-  * First release for basic features. 
+  * [NEW] - First release for basic features.
