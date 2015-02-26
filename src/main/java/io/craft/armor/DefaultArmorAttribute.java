@@ -28,8 +28,8 @@ public class DefaultArmorAttribute implements ArmorAttribute {
 	
 	
 	public DefaultArmorAttribute() {
-		timeoutInMillis = 3000;
-		threads         = Runtime.getRuntime().availableProcessors();
+		timeoutInMillis = DEFAULT_TIMEOUT * 1000;
+		threads         = DEFAULT_THREADS;
 		executorService = new ThreadPoolExecutor(1, threads, 60, TimeUnit.SECONDS, new SynchronousQueue<Runnable>(), new NamedThreadFactory("craft-armor"));
 		executorService.allowCoreThreadTimeOut(true);
 	}
@@ -47,7 +47,7 @@ public class DefaultArmorAttribute implements ArmorAttribute {
 
 	@Override
 	public int getThreadSize() {
-		return executorService.getCorePoolSize();
+		return executorService.getMaximumPoolSize();
 	}
 
 	@Override

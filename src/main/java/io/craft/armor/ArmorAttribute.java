@@ -13,6 +13,10 @@ import java.util.concurrent.ExecutorService;
 public interface ArmorAttribute {
 	
 	
+	public static final int DEFAULT_THREADS = Runtime.getRuntime().availableProcessors();
+	public static final int DEFAULT_TIMEOUT = 3;
+	
+	
 	ExecutorService  getExecutorService();
 	ArmorFilterChain getFilterChain();
 	void             setFilterChain(ArmorFilterChain filterChain);
