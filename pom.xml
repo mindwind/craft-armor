@@ -10,7 +10,7 @@
 
 	<groupId>io.craftcode</groupId>
 	<artifactId>craft-armor</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<name>craft-armor</name>
 	<description>An in-process service container to arm your application and enhance it’s robustness.</description>
 	<url>https://github.com/mindwind/craft-armor</url>
