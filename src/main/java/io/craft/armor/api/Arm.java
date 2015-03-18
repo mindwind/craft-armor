@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates armed method.
+ * Indicates a method is armed, using this on top of service implementor method.
  * 
  * @author mindwind
  * @version 1.0, Feb 26, 2015
