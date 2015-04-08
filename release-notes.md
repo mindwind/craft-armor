@@ -12,16 +12,19 @@
 ------------------------------------------------------------------------------
 
 
-## Armor 1.1.1 UPGRADE URGENCY: MODERATE
+## Armor 1.1.1
+UPGRADE URGENCY: MODERATE
+This release mostly fixes a small issue.
   * [FIX] - Bug #1, In async execution mode, the ArmorListener callback order is wrong.
 
 
-## Armor 1.1.0  UPGRADE URGENCY: MODERATE
-
+## Armor 1.1.0  
+UPGRADE URGENCY: MODERATE
+This release mostly adds some new features.
   * [NEW] - Async execution mode support.
   * [NEW] - @Arm annotation for some static configuration.
 
 
 ## Armor 1.0.0
-
+First release version.
   * [NEW] - First release for basic features.
