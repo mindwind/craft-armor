@@ -94,6 +94,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		} catch (ArmorTimeoutException e) {
 			Assert.assertTrue(true);
 		}
+		armorService.setTimeoutInMillis(DemoServiceImpl.class, "timeout", new Class<?>[] { int.class }, 3000);
 		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor timeout. ", CaseCounter.incr(1)));
 	}
 	
@@ -116,6 +117,7 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		} catch (ArmorTimeoutException e) {
 			Assert.fail();
 		}
+		armorService.setAsync(DemoServiceImpl.class, "timeout", new Class<?>[] { int.class }, false);
 		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor async. ", CaseCounter.incr(1)));
 	}
 	
@@ -139,8 +141,8 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		armorService.setAsync(DemoServiceImpl.class, "timeout", new Class<?>[] { int.class }, true);
 		demoService.timeout(100);
 		Thread.sleep(110);
-		System.out.println(listener.elapse());
 		Assert.assertTrue(listener.elapse() >= 100);
+		armorService.setAsync(DemoServiceImpl.class, "timeout", new Class<?>[] { int.class }, false);
 		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor listener. ", CaseCounter.incr(2)));
 	}
 

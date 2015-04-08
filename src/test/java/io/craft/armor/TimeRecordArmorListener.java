@@ -14,22 +14,21 @@ public class TimeRecordArmorListener implements ArmorListener {
 	private volatile long end;
 	
 	@Override
-	public void beforeInvoke(ArmorInvocation invocation) {
+	synchronized public void beforeInvoke(ArmorInvocation invocation) {
 		start = System.currentTimeMillis();
 	}
 
 	@Override
-	public void afterInvoke(ArmorInvocation invocation, Object result) {
+	synchronized public void afterInvoke(ArmorInvocation invocation, Object result) {
 		end = System.currentTimeMillis();
-
 	}
 
 	@Override
-	public void errorInvoke(ArmorInvocation invocation, Throwable error) {
+	synchronized public void errorInvoke(ArmorInvocation invocation, Throwable error) {
 		end = System.currentTimeMillis();
 	}
 	
-	public long elapse() {
+	synchronized public long elapse() {
 		return end - start;
 	}
 
