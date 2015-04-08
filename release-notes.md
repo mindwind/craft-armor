@@ -12,12 +12,16 @@
 ------------------------------------------------------------------------------
 
 
-## craft-armor 1.1.0  UPGRADE URGENCY: MODERATE
+## Armor 1.1.1 UPGRADE URGENCY: MODERATE
+  * [FIX] - Bug #1, In async execution mode, the ArmorListener callback order is wrong.
+
+
+## Armor 1.1.0  UPGRADE URGENCY: MODERATE
 
   * [NEW] - Async execution mode support.
   * [NEW] - @Arm annotation for some static configuration.
 
 
-## craft-armor 1.0.0
+## Armor 1.0.0
 
   * [NEW] - First release for basic features.
