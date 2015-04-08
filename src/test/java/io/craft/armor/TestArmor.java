@@ -129,5 +129,19 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		Assert.assertEquals(5 * 1000, timeoutInMillis);
 		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test arm annotation. ", CaseCounter.incr(3)));
 	}
+	
+	@Test
+	public void testArmorListener() throws InterruptedException {
+		TimeRecordArmorListener listener = new TimeRecordArmorListener();
+		armorService.register(listener);
+		demoService.timeout(100);
+		Assert.assertTrue(listener.elapse() >= 100);
+		armorService.setAsync(DemoServiceImpl.class, "timeout", new Class<?>[] { int.class }, true);
+		demoService.timeout(100);
+		Thread.sleep(110);
+		System.out.println(listener.elapse());
+		Assert.assertTrue(listener.elapse() >= 100);
+		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor listener. ", CaseCounter.incr(2)));
+	}
 
 }

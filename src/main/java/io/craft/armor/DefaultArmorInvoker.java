@@ -50,7 +50,6 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 			// Armor context invoke
 			listener.beforeInvoke(invocation);
 			Object result = armorInvoke(invocation);
-			listener.afterInvoke(invocation, result);
 			return result;
 		} catch (InvocationTargetException e) {
 			listener.errorInvoke(invocation, e.getCause());
@@ -68,10 +67,13 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 	}
 	
 	private Object rawInvoke(ArmorInvocation invocation) throws Throwable {
+		ArmorListener listener = context.listener();
 		Object   delegate = invocation.getDelegateObject();
 		Method   method   = invocation.getMethod();
 		Object[] args     = invocation.getParameters();
-		return method.invoke(delegate, args);
+		Object result = method.invoke(delegate, args);
+		listener.afterInvoke(invocation, result);
+		return result;
 	}
 	
 	private Object armorInvoke(ArmorInvocation invocation) throws Throwable {
