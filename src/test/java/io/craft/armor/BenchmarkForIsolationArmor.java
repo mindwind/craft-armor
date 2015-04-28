@@ -6,7 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author mindwind
  * @version 1.0, Jan 6, 2015
  */
-public class IsolationArmor {
+public class BenchmarkForIsolationArmor {
 	
 	
 	private static final long NANOS_PER_MS  = 1000 * 1000 * 1L ;
@@ -29,29 +29,34 @@ public class IsolationArmor {
 
 	private static void doBenchmark() {
 		System.out.println("1st Warming up ...");
-		loop(is, WARMUP_NUM, true);
+		loop(is, WARMUP_NUM, true, true);
 		System.out.println("1st Warming up done.\n");
 		
 		System.out.println("2nd Warming up ...");
-		loop(is, WARMUP_NUM, true);
+		loop(is, WARMUP_NUM, true, true);
 		System.out.println("2nd Warming up done.\n");
         
         System.out.println("Starting armor normal interval ...");
-		loop(is, BENCHMARK_NUM, false);
+		loop(is, BENCHMARK_NUM, false, false);
         System.out.println("End armor normal interval done.\n");
         
         System.out.println("Starting armor normal with timeout interval ...");
-		loop(is, BENCHMARK_NUM, true);
+		loop(is, BENCHMARK_NUM, true, false);
         System.out.println("End armor normal with timeout interval done.");
+        
+        System.out.println("Starting armor normal with timeout and error interval ...");
+		loop(is, BENCHMARK_NUM, true, true);
+        System.out.println("End armor normal with timeout and error interval done.");
 	}
 	
-	private static void loop(IsolationService is, long iterations, boolean timeout) {
+	private static void loop(IsolationService is, long iterations, boolean timeout, boolean error) {
 		long sum = 0;
 		long startTime = System.nanoTime();
 		for (int i = 0; i < iterations; i++) {
 			try {
 				sum += is.normal(i);
 				if (timeout) { is.timeout(i); }	
+				if (error) { is.error(); }
 			} catch (Exception e) {}
 		}
 		long elapsedTime = System.nanoTime() - startTime;

@@ -33,4 +33,10 @@ public class IsolationServiceImpl implements IsolationService {
 		}
 	}
 
+	@Override
+	@Arm(threads = 100)
+	public void error() {
+		throw new UnsupportedOperationException();
+	}
+
 }

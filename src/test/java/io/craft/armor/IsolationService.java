@@ -9,5 +9,6 @@ public interface IsolationService {
 	
 	int normal(int i);
 	void timeout(int i);
+	void error();
 	
 }
