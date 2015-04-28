@@ -18,7 +18,7 @@ public class BenchmarkForIsolationArmor {
 	
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		context = new ClassPathXmlApplicationContext(new String[]{"classpath:spring.xml"});
 		context.start();
 		is = (IsolationService) context.getBean("isolationService");
@@ -27,36 +27,64 @@ public class BenchmarkForIsolationArmor {
         System.out.println("Test completed.");
 	}
 
-	private static void doBenchmark() {
+	private static void doBenchmark() throws InterruptedException {
 		System.out.println("1st Warming up ...");
-		loop(is, WARMUP_NUM, true, true);
+		loopNormalAndTimeout(is, WARMUP_NUM, false);
+		loopNormalAndError(is, WARMUP_NUM, false);
 		System.out.println("1st Warming up done.\n");
 		
 		System.out.println("2nd Warming up ...");
-		loop(is, WARMUP_NUM, true, true);
+		loopNormalAndTimeout(is, WARMUP_NUM, false);
+		loopNormalAndError(is, WARMUP_NUM, false);
 		System.out.println("2nd Warming up done.\n");
         
-        System.out.println("Starting armor normal interval ...");
-		loop(is, BENCHMARK_NUM, false, false);
-        System.out.println("End armor normal interval done.\n");
+        System.out.println("Starting armor normal without timeout interval ...");
+		loopNormalAndTimeout(is, BENCHMARK_NUM, false);
+        System.out.println("End armor normal without timeout interval done.\n");
         
         System.out.println("Starting armor normal with timeout interval ...");
-		loop(is, BENCHMARK_NUM, true, false);
+		loopNormalAndTimeout(is, BENCHMARK_NUM, true);
         System.out.println("End armor normal with timeout interval done.");
         
-        System.out.println("Starting armor normal with timeout and error interval ...");
-		loop(is, BENCHMARK_NUM, true, true);
-        System.out.println("End armor normal with timeout and error interval done.");
+        Thread.sleep(10000);
+        
+        System.out.println("Starting armor normal without error interval ...");
+        loopNormalAndError(is, WARMUP_NUM, false);
+        System.out.println("End armor normal without error interval done.");
+        
+        System.out.println("Starting armor normal with error interval ...");
+        loopNormalAndError(is, WARMUP_NUM, true);
+        System.out.println("End armor normal with error interval done.");
 	}
 	
-	private static void loop(IsolationService is, long iterations, boolean timeout, boolean error) {
+	private static void loopNormalAndTimeout(IsolationService is, long iterations, boolean timeout) {
 		long sum = 0;
 		long startTime = System.nanoTime();
 		for (int i = 0; i < iterations; i++) {
 			try {
 				sum += is.normal(i);
-				if (timeout) { is.timeout(i); }	
-				if (error) { is.error(); }
+				is.timeout(timeout); 
+			} catch (Exception e) {}
+		}
+		long elapsedTime = System.nanoTime() - startTime;
+		
+		System.out.println("Loop sum ->" + sum);
+		System.out.println("Elapsed miliseconds ->" + elapsedTime / NANOS_PER_MS);
+		float millis = elapsedTime / NANOS_PER_MS;
+        float itrsPerMs = 0;
+        if (millis != 0) {
+            itrsPerMs = iterations / millis;
+        }
+        System.out.println("Iterations per milliseconds ->" + itrsPerMs);
+	}
+	
+	private static void loopNormalAndError(IsolationService is, long iterations, boolean error) {
+		long sum = 0;
+		long startTime = System.nanoTime();
+		for (int i = 0; i < iterations; i++) {
+			try {
+				sum += is.normal(i);
+				is.error(error);
 			} catch (Exception e) {}
 		}
 		long elapsedTime = System.nanoTime() - startTime;

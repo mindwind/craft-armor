@@ -24,7 +24,8 @@ public class IsolationServiceImpl implements IsolationService {
 
 	@Override
 	@Arm(async = true, threads = 100)
-	public void timeout(int i) {
+	public void timeout(boolean timeout) {
+		if (!timeout) return;
 		try {
 			Random rand = new Random();
 			Thread.sleep((rand.nextInt(10) + 1) * 1000);
@@ -34,8 +35,9 @@ public class IsolationServiceImpl implements IsolationService {
 	}
 
 	@Override
-	@Arm(threads = 100)
-	public void error() {
+	@Arm(async = true, threads = 100)
+	public void error(boolean error) {
+		if (!error) return;
 		throw new UnsupportedOperationException();
 	}
 
