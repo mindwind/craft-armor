@@ -4,9 +4,12 @@ import io.craft.armor.api.ArmorDegradeException;
 import io.craft.armor.api.ArmorFactory;
 import io.craft.armor.api.ArmorService;
 import io.craft.armor.api.ArmorTimeoutException;
+import io.craft.armor.spi.ArmorInvocation;
+import io.craft.armor.spi.ArmorListener;
 import io.craft.atom.test.CaseCounter;
 
 import java.lang.reflect.Proxy;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import junit.framework.Assert;
 
@@ -144,6 +147,34 @@ public class TestArmor extends AbstractJUnit4SpringContextTests {
 		Assert.assertTrue(listener.elapse() >= 100);
 		armorService.setAsync(DemoServiceImpl.class, "timeout", new Class<?>[] { int.class }, false);
 		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor listener. ", CaseCounter.incr(2)));
+	}
+	
+	@Test
+	public void testArmorListenerInAsyncMode() {
+		final AtomicInteger err = new AtomicInteger();
+		armorService.register(new ArmorListener() {
+			
+			@Override
+			public void errorInvoke(ArmorInvocation invocation, Throwable error) {
+				err.incrementAndGet();
+			}
+			
+			@Override
+			public void beforeInvoke(ArmorInvocation invocation) {}
+			
+			@Override
+			public void afterInvoke(ArmorInvocation invocation, Object result) {}
+		});
+		
+		armorService.setAsync(DemoServiceImpl.class, "throwException", new Class<?>[] {}, true);
+		try {
+			demoService.throwException();
+			Thread.sleep(100);
+		} catch (Exception e) {
+			Assert.fail();
+		}
+		Assert.assertTrue(err.get() > 0);
+		System.out.println(String.format("[CRAFT-ARMOR] (^_^)  <%s>  Case -> test armor listener in async mode. ", CaseCounter.incr(2)));
 	}
 
 }

@@ -129,6 +129,7 @@ public class DefaultArmorInvoker implements ArmorInvoker {
 				result.setValue(value);
 			} catch (Throwable t) {
 				result.setException(t);
+				context.listener().errorInvoke(invocation, t);
 			} finally {
 				context.remove();
 			}
