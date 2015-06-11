@@ -11,7 +11,7 @@ Use it as a maven dependency:
 <dependency>
     <groupId>io.craftcode</groupId>
     <artifactId>craft-armor</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <type>jar</type>
 </dependency>
 ```

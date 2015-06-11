@@ -11,6 +11,11 @@
 
 ------------------------------------------------------------------------------
 
+## Armor 1.1.2
+UPGRADE URGENCY: MODERATE
+This release mostly fixes a small issue.
+  * [FIX] - Bug #3, In async execution mode, the ArmorListener error callback missing.
+  
 
 ## Armor 1.1.1
 UPGRADE URGENCY: MODERATE
