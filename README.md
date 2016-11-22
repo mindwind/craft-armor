@@ -1,8 +1,8 @@
-![craft-armor](http://craftcode.io/images/craft-logo.png)  
+![craft-armor](http://mindwind.me/images/craft-logo.png)  
 Armor is an in-process service container for developers to build reliable and robust java application. Armor enables exported service of apps to be executed in isolated thread context. As a result, different service execution flow does not interfere with each other.  
 
 This README is just a fast "quick start" document.
-You can find more detailed documentation at [http://craftcode.io](http://craftcode.io).
+You can find more detailed documentation [here](http://mindwind.me/craft).
 
 ## How do I use it?
 Use it as a maven dependency:
